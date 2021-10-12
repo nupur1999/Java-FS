@@ -1,0 +1,1318 @@
+#Exception - unwanted situation in processs is called Exception.
+#ExceptionHandling - normal termination of program  in unwamted situation is called ExceptionHandling.
+
+ex-
+class ExceptionDemo{
+  public static void main(String[] args){
+           System.out.println("In main");
+           fun();
+           System.out.println("In main-after fun");
+     }
+  static void fun(){
+            System.out.println("In fun");
+          gun(); 
+      System.out.println("In fun - after gun");
+    }
+    static void gun(){
+            System.out.println("In gun");
+ }
+}
+o/p-In main
+     In fun
+     In gun
+     In fun - after gun
+     In main-after fun
+
+***********************************************************************************************************************************************************************************
+.Default Exception Hnadler-JVM hande the exception in his way by giving stack trace
+
+ex-
+class ExceptionDemo{
+  public static void main(String[] args){
+           System.out.println("In main");
+           fun();
+           System.out.println("In main-after fun");
+     }
+  static void fun(){
+            System.out.println("In fun");
+          gun(); 
+      System.out.println("In fun - after gun");
+    }
+    static void gun(){
+            System.out.println("In gun");
+             System.out.println("10/0");
+ }
+}
+o/p-In main
+   In fun
+  In gun
+  Exception in thread 'main' java.lang.Aru=ithmaticException: / by zero(run time exception)
+   gun()
+   fun()
+  main()
+
+****************************************************************************************************************************************************************
+.Exampe of run time and compile time exception
+
+ex-Run time-->
+class ExceptionDemo{
+  public static void main(String[] args){
+           System.out.println("In main");
+          ExceptionDemo obj= null;
+           obj.fun();
+           System.out.println("In main-after fun");
+     }
+   void fun(){
+            System.out.println("In fun");
+          gun(); 
+      System.out.println("In fun - after gun");
+    }
+    static void gun(){
+            System.out.println("In gun");
+            
+
+ }
+}
+
+o/p-In main
+   run time exception
+
+
+
+ex-Compil time-->
+class ExceptionDemo{
+  public static void main(String[] args){
+           System.out.println("In main");
+           fun();
+           System.out.println("In main-after fun");
+     }
+    void fun(){
+            System.out.println("In fun");
+          gun(); 
+      System.out.println("In fun - after gun");
+    }
+    static void gun(){
+            System.out.println("In gun");
+ }
+}
+o/p-compile time exception
+
+
+*************************************************************************************************************************************************************************************
+1) 10/0 --> java.lang.arithmaticexception
+
+2) obj=null;
+   obj.fun();  --> lang.NullPointerException
+
+
+Exception error stntax-->
+   1) Thread Name(in which exception occur)
+   2) Exception Nmae (Explaine class name)
+   3) Description(optional)
+   4) stack trace
+
+
+***********************************************************************************************************************************************************************************
+
+
+
+
+                                                   object
+                                                      |                             stackoverflow
+                                                      |                            /            
+                                                  Throwable        Virtual Machine/
+                                                /          \      /               \
+                                      Exception             Error/                 \out of memory
+                                       |                       | \
+                                       |                       |  \
+                                   ( Handable )       (NonHandable)\   
+                                                                    ThreadDead
+
+
+
+********************************************************************************************************************************************************************
+               
+
+                                                     object
+                                                      |                             
+                                                      |                                     
+                                                  Throwable   
+                                                /          
+                                      Exception 
+                                         -------------------------------------------------------------------------------------------------------------------
+                                        |                                                                                                                  |
+                                    Runtime Exception(unchecked exception)                                                                       Compiletime Exception(checked exception)
+                                         |                                                                                                                 |                                                   
+                                         |-AritmeticException                                                              ----------------------------------------------                                                                                         
+                                         |-NullpointerException                                                            |                 |                         |
+                                         |-IndexOutogBond                                                            IOException        InterreptedException     SQLEception
+                                         |           \                                                               |-FilenotFound
+                                         |            -StringIndexOutofBond                                          |-EOException
+                                         |            -ArrayIndexOutOfBond   
+                                         |
+                                         |-InputMismatchException
+                                         |-NumberFormatException
+                                         |-classCastException
+                                         
+                                                   
+
+
+*******************************************************************************************************************************************************************
+#RuntimeException-
+
+1)ArithmeticException-
+     
+
+class ArithmeticDemo{
+  public static void main(String[] args){
+        System.out.println("ExceptionDemo");       
+        System.out.println(10/0);
+ }
+}
+o/p-ExceptionDemo
+    Eception in thread'main' java.lang.ArithmeticException;?by zero
+
+***********************************************************************************************************************************************************************************
+
+2)NullpointerException-                 
+
+class NullPointerDemo{
+  public static void main(String[] args){
+       // NullPointerDemo obj= new   NullPointerDemo();
+        NullPointerDemo obj= null;
+        obj.fun();
+       
+ }
+ void fun(){
+     System.out.println("In fun");    
+    }
+}
+o/p- Exception in thread'main' java.lang.NullPointerException 
+
+***********************************************************************************************************************************************************************************
+
+
+3)IndexOutOfBond Exception-
+
+3.1)ArrayindexOutOfBond
+class IndexOutOfBond {
+  public static void main(String[] args){
+       int arrr[]=new int[3];
+        
+           arrr[0]=10;
+           arrr[1]=20;
+           arrr[2]=30;
+
+     System.out.println(arr[3]);
+}}
+o/p- Exception in thread'main' java.lang.ArrayIndexOutOfBondException 
+
+
+3.2)StringIndexOutOfBond
+
+class IndexOutOfBond {
+  public static void main(String[] args){
+       String s="Shashi";
+         System.out.println(s.charAt(6));
+           
+}
+o/p- Exception in thread'main' java.lang.StringIndexOutOfBondException 
+
+***********************************************************************************************************************************************************************************
+
+4)InputMissMatch Exception
+imort java.util.*
+class InputMissMatchdemo{
+    public static void main(String[] args){
+       Scanner sc=new Scanner(System.in);
+         int a=sc.nextInt();
+         System.out.println(a);
+  }
+}
+o/p- shashi
+   Exception in thread'main' java.util.InputMismatchException 
+
+***********************************************************************************************************************************************************************************
+
+5)NumberFormat Exception
+imort java.io.*;
+ class NumberFormatDemo{
+    public static void main(String[] args) throws IOException{
+    BufferReader br=new BufferReader(new InputStreamReader(System.in));
+    int a= Integer.parseInt(br.readLine());
+   System.out.println(a);
+  }
+}
+o/p-Shashi
+   Exception in thread'main' java.util.NumberFormatException 
+  
+***********************************************************************************************************************************************************************************
+
+6)Classcast exception
+class ClasscastDemo{
+    public static void main(String[] args) {
+     Object o= new Integer(10);  //parent object child INteger->works
+     String s=(String)o;  //says that object o convert object of integer to string which is not possible
+}
+}
+o/p-Exception in thread'main' java.util.ClassCastException 
+
+
+***********************************************************************************************************************************************************************************
+#compiletime exception-
+
+#IOException
+
+1)IOException-
+class IOExceptionDemo{
+   public static void main(String[] args){
+      BufferedReader br= new BufferedReader(new InputStreamReader(System.in));
+      int a= Integer.parseInt(br.reasLine());        
+  }
+}
+ o/p-IOException
+
+
+2)FileNotFoundException-
+
+class FileNotFound{
+  public static void main(String[] args){
+      File f= new File("Core2web.txt");
+  }
+}
+o/p-compiles and run sucessfully;
+
+
+ 2.1)when we try to do operation on that file gives exception
+ ex-
+class FileNotFound{
+  public static void main(String[] args){
+      File f= new File("Core2web.txt");
+      FileInputstream fls =new FileInputStream(f);
+  }
+}
+ o/p-FileNotFoundException
+
+ex-
+class FileNotFound throws FileNotFoundException{
+  public static void main(String[] args){
+      File f= new File("Core2web.txt");
+      FileInputstream fls =new FileInputStream(f);
+  }
+}
+o/p-comiles Sucessfully
+
+***************************************************************************************************************************************************************
+#Inturrupted Exception-
+
+ex-
+class InturruptedDemo{
+   public static void main(String[] args){
+      
+    Thread t= new Thread();
+    t.start();      
+   
+  System.out.println("Core2web");
+  t.sleep(5000); 
+  System.out.println("Biencaps");
+   } 
+}
+o/p-Inturrupted Exception
+
+
+ex-
+class InturruptedDemo {
+   public static void main(String[] args)throws InterruptedException{
+      
+    Thread t= new Thread();
+    t.start();      
+   
+  System.out.println("Core2web");
+  t.sleep(5000); 
+  System.out.println("Biencaps");
+   } 
+}
+ o/p-Core2web
+     Biencaps(after 5 sec)
+
+
+**************************************************************************************************************************************************************
+#Working of Stacktrace which one is given by JVM 
+
+javap java.lang.ArithmeticException
+javap java.lang.RuntimeException
+javap java.lang.Exception
+javap java.lang.Throwable --->FillInStsckTrace() method in all constructor
+                                    |
+                              FillInStackTrace(0)->return throwable (jvm gives stack trace to this native method)
+                                                 \
+                                                  native method              
+
+
+   
+******************************************************************************************************************************************************************
+#use of throws in copiletime Exception and run time Exception
+
+For Runtime-
+class TryCatchDemo throws Arithematic exception{
+public static void main(String[] args){ 
+ System.out.println("core2web");
+ try{
+ System.out.println(10/0);
+}catch(ArithmeticException e){
+
+}
+ System.out.println("Biencaps");
+
+}
+ o/p- core2web(compiles sucessfully)
+      Exception in thread'main' java.lang.ArithmeticException;?by zero
+
+Note- as Arithmetic is a run time exception it is fine to give throws Arithmetic Exception but jvm gives default exception bcz its not matter bcz compilation time it was not handled.
+
+
+For compileTime-
+class FileNotFound throws FileNotFoundException{
+  public static void main(String[] args){
+      File f= new File("Core2web.txt");
+      FileInputstream fls =new FileInputStream(f);
+  }
+}
+ o/p-compiles and runs sucessfully
+
+
+Highlight-throws can be used for checked and unched exception but its not worth fot unchecked exception bcz anyway jvm is gonna give default exception  bcz its not handle at copile time.
+
+****************************************************************************************************************************************************************************
+#Try Catch-
+
+ex 1-
+class withouttrycatchDemo{
+ public static void main(String[] args){
+               
+  System.out.println("Before Exception Occurs");
+       withoutTryCatchDemo obj=null;
+        obj.fun();
+ System.out.println("After Exception Occurs");      
+}
+void fun(){
+System.out.println("In fun");     
+}
+}
+o/p-Exception in thread'main' java.lang.NullPointerException  
+
+
+ex-
+class withtrycatchDemo{
+ public static void main(String[] args){
+               
+  System.out.println("Before Exception Occurs");
+       withTryCatchDemo obj=null;
+  try{
+        obj.fun();
+}catch(NullPointerException x){
+  
+}
+ System.out.println("After Exception Occurs");      
+}
+void fun(){
+System.out.println("In fun");     
+}
+}
+o/p-Before Exception Occurs
+    After Exception Occurs
+
+     *************************************************
+
+ex 2-
+class TryCatchDemo{
+public static void main(String[] args){ 
+ System.out.println("core2web");
+ System.out.println(10/0);
+ System.out.println("Biencaps");
+
+}
+ o/p-arithemetic exception
+
+
+ex-
+class TryCatchDemo{
+public static void main(String[] args){ 
+ System.out.println("core2web");
+ try{
+ System.out.println(10/0);
+}catch(ArithmeticException e){
+
+}
+ System.out.println("Biencaps");
+
+}
+ o/p-core2web
+   Biencaps
+
+*******************************************************************************************************************************************************************************************
+*Handling of arithmetic exception-
+class TryRuntimeDemo{
+   public static void main(String[] args){
+             try{
+          System.out.println(10/0);
+       }catch(ArithmeticException obj){
+          System.out.println("Exception Handled");
+    }
+   System.out.println("After Try cactch");
+  }
+}
+o/p-Exception Handled
+    After Try cactch
+
+.catch exception handler should be parent of exception or it self 
+
+ex-
+class TryRuntimeDemo{
+   public static void main(String[] args){
+             try{
+          System.out.println(10/0);
+       }catch(Exception obj){
+          System.out.println("Exception Handled");
+    }
+   System.out.println("After Try cactch");
+  }
+}
+
+ex-
+class TryRuntimeDemo{
+   public static void main(String[] args){
+             try{
+          System.out.println(10/0);
+       }catch(NullPointerException obj){
+          System.out.println("Exception Handled");
+    }
+   System.out.println("After Try cactch");
+  }
+}
+o/p-exception in thread main'arithmetic xception'
+(bcz Nullpointer is not a parent of arithmetic excetion so it throw default exception)
+
+
+
+*Handling of nullpointer exception-
+class TryRuntimeDemo{
+           int x=10;
+   public static void main(String[] args){
+             try{
+          TryRuntimeDemo obj= null;
+         System.out.println(obj.x);
+       }catch(NullPointerException obj){
+          System.out.println("Exception Handled");
+    }
+   System.out.println("After Try cactch");
+  }
+}
+o/p-Exception Handled
+    After Try cactch
+
+
+
+*************************************************************************************************************************************************************************************
+*Compiletime Exception can also be thrown at runtime
+ex-
+import java.io.*;
+class CheckedDemo {
+   public static void main(String[] args) throws IOException{ 
+  BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+  System.out.println(br.readLine());
+      br.close(); 
+   System.out.println(br.readLine());
+  }
+}
+ o/p-Shashi
+    Shasshi
+   Exception in thread main'buffereader is closed'
+
+
+ex-
+import java.io.*;
+class CheckedDemo {
+   public static void main(String[] args) throws IOException{ 
+  BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+  System.out.println(br.readLine());
+      br.close(); 
+  try{
+   System.out.println(br.readLine());
+  }catch(IOException obj){
+    System.out.println("pipe is closed");
+  }
+}
+ o/p-Shashi
+    Shasshi
+  pipe is closed
+
+
+.we can write one or many exception class in throws-
+
+ex-
+class CheckedDemo {
+   public static void main(String[] args) throws NullPointerException{ 
+  BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+  System.out.println(br.readLine());
+ }
+}
+o/p-Unreported exception IOException;must be caught or declarec to be thrown
+
+
+
+ex-
+class CheckedDemo {
+   public static void main(String[] args) throws NullPointerException,IOException{ 
+  BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+  System.out.println(br.readLine());
+ }
+}
+o/p-Shashi
+    Shashi
+
+
+
+ex-
+class CheckedDemo {
+   public static void main(String[] args){ 
+  BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+ try{
+  System.out.println(br.readLine());
+ }catch(IOException  obj){
+    System.out.println("IO Exception catched");
+  }
+ System.out.println("End of program");
+}
+}
+o/p-Shashi
+    Shashi
+    End of program
+
+***********************************************************************************************************************************************************
+overview-                       checked exception  
+                  1.     throws/
+                               \unchecked exception                          
+
+
+
+                 2.     throws IOException,.................(we can write one or many classes)
+                  
+  
+                3.         try{
+                             } 
+                         catch(IOexception ref)// exact checked exception class otherwise it throws error but we can write unchecked exception class if it occur in try or not doesnt matter
+                          {
+                          }
+
+
+                       
+********************************************************************************************************************************************************************************************
+*writing own catch in try catch-
+
+class Core2web extends RuntimeException{
+ int x= 20;
+}
+class ExceptionDemo
+{
+public static void main(String[] args){
+  try{
+      System.out.println(10/0);
+    }catch(Core2web e){
+     System.out.println("Handling code");
+     }
+  }
+}
+o/p-compiles but give exception as arithmetic exception is their
+
+
+
+
+ 
+class Core2web extends Throwable{
+ int x= 20;
+}
+class ExceptionDemo
+{
+public static void main(String[] args){
+  try{
+      System.out.println(10/0);
+    }catch(Core2web e){
+     System.out.println("Handling code");
+     }
+  }
+}
+o/p-error (compilation is also not done because throwable is a parent of compiletime exception class and in compiletime exception class we can not write exception class in catch which 
+          is not occur in try)
+
+
+*******************************************************************************************************************************************************************************************
+#Flow of try catch
+
+.example without exception with try catch-
+
+class TryDemo{
+  public static void main(String[] args){
+
+      System.out.println("Statement1");
+      try{
+      System.out.println("Statement2");
+      // System.out,println(10/0);
+      System.out.println("Statement3");
+    }catch(ArithmeticException ae){
+     System.out.println("Statement4");
+  }
+   System.out.println("Statement5");
+ }
+}  
+o/p-Statement1
+    Statement2
+    Statement3
+    Statement5
+
+
+.example with exception with try catch-
+
+class TryDemo{
+  public static void main(String[] args){
+
+      System.out.println("Statement1");
+      try{
+      System.out.println("Statement2");
+       System.out,println(10/0);
+      System.out.println("Statement3");
+    }catch(ArithmeticException ae){
+     System.out.println("Statement4");
+  }
+   System.out.println("Statement5");
+ }
+}  
+o/p-Statement1
+    Statement2
+    Statement4
+    Statement5
+
+***********************************************************************************************************************************************************************************
+ #multiple try ctach-
+
+ex1->
+
+class Biencaps{
+  void product(){
+ System.out.println("Biencaps");
+  }
+}
+class TryDemo{
+  public static void main(String[] args){
+
+      System.out.println("Statement1");
+      try{
+         System.out.println("Statement2");
+         System.out,println(10/0);
+         System.out.println("Statement3");
+        }catch(ArithmeticException ae){
+          System.out.println("Statement4");
+        }
+        System.out.println("Statement5");
+
+      try{
+      System.out.println("Statement6");
+      Biencaps obj= new Biencaps();
+      obj.product();
+      System.out.println("Statement7");
+      }catch(NullPointerException ae){
+     System.out.println("Statement 8");
+  }
+   System.out.println("Statement 9");
+ }
+}  
+o/p-Statement1
+    Statement2
+    Statement4
+    Statement5
+    Statement6
+     Biencaps
+    Statement7
+    Statement9
+
+
+
+ex2->
+
+class Biencaps{
+  void product(){
+ System.out.println("Biencaps");
+  }
+}
+class TryDemo{
+  public static void main(String[] args){
+
+      System.out.println("Statement1");
+      try{
+         System.out.println("Statement2");
+         System.out,println(10/0);
+         System.out.println("Statement3");
+        }catch(ArithmeticException ae){
+          System.out.println("Statement4");
+        }
+        System.out.println("Statement5");
+
+      try{
+      System.out.println("Statement6");
+      Biencaps obj=null;
+      obj.product();
+      System.out.println("Statement7");
+      }catch(NullPointerException ae){
+     System.out.println("Statement 8");
+  }
+   System.out.println("Statement 9");
+ }
+}  
+o/p-Statement1
+    Statement2
+    Statement4
+    Statement5
+    Statement6
+    Statement8
+    Statement9
+
+
+************************************************************************************************************************************************************************************
+
+#Try with multiple catch->
+
+ex 1-
+.Example with arithmetic Exception-->
+
+import java.io.*;
+class MultipleCatch {
+
+ public static void main(String[] args){
+      BufferedReader br= new BufferedReader(new InputStreamReader(System.in));
+   try{
+      System.out.println(10/0);
+      System.out.println(br.readLine());
+    }catch(ArithmeticException ae){
+       System.out.println("Arithmetic exception");
+    }catch(IOException ie){
+       System.out.println("IOException exception");
+    }
+  }
+}
+o/p-Arithmetic exception(in try it sees 10/0 gives exception catch in Aritmetic exception dont go again in try program termination is done)
+  
+
+ex 2-
+Example without any Exception-->
+
+import java.io.*;
+class MultipleCatch {
+
+ public static void main(String[] args){
+      BufferedReader br= new BufferedReader(new InputStreamReader(System.in));
+   try{
+      System.out.println("hello");
+      System.out.println(br.readLine());
+    }catch(ArithmeticException ae){
+       System.out.println("Arithmetic exception");
+    }catch(IOException ie){
+       System.out.println("IOException exception");
+    }
+  }
+}
+o/p-hello
+    Shashi
+    Shashi
+
+
+ ex 3- 
+.example for IOException-->
+            
+import java.io.*;
+class MultipleCatch {
+
+ public static void main(String[] args){
+      BufferedReader br= new BufferedReader(new InputStreamReader(System.in));
+   try{
+      System.out.println("hello");
+      br.close();
+      System.out.println(br.readLine());
+    }catch(ArithmeticException ae){
+       System.out.println("Arithmetic exception");
+    }catch(IOException ie){
+       System.out.println("IOException exception");
+    }
+  }
+}
+o/p-hello
+   IOException exception
+
+**************************************************************************************************************************************************************************************
+ #sequence exception class in catch matters->
+
+.we can not write same exception in mutilpe catch->
+ex -->
+class catchSequence{
+ public static void main(String[] args){
+    try{
+       System.out.println(10/0;
+   }catch(ArithmeticException ae){
+    System.out.println("Arithmetic catched");
+  }catch(ArithmeticException ae){
+    System.out.println("again Arithmetic catched");
+  }
+ }
+}
+o/p-compile time error(Arithmetic exceeption already been caught)
+
+
+.we can not write parent exception before child class exception->
+ex -->
+class catchSequence{
+ public static void main(String[] args){
+    try{
+       System.out.println(10/0;
+   }catch(Exception ae){
+    System.out.println("Arithmetic catched");
+  }catch(ArithmeticException ae){
+    System.out.println("again Arithmetic catched");
+  }
+ }
+}
+o/p-compile time error(Arithmetic exceeption already been caught)
+
+
+
+.we can  write child exception before parent class exception->
+ex -->
+class catchSequence{
+ public static void main(String[] args){
+    try{
+       System.out.println(10/0);
+   }catch(ArithmeticException ae){
+    System.out.println("Arithmetic catched");
+  }catch(Exception ae){
+    System.out.println("again Arithmetic catched");
+  }
+ }
+}
+o/p-Arithmetic catched
+
+***************************************************************************************************************************************************************************************
+#Finally in try catch -->
+
+   -uswally use of finally is to close the connection of bufferedred reader , aws connection , database connection to terminate program safely. 
+   -finally block is excuted compulsary after try catch or after try.
+   -we can write finally after try or after try catch.
+.ex-
+class FinallyDemo{
+  public static void main(String[] args){
+    try{
+      System.out.println("In try");
+  }catch(Exception e){
+    System.out.println("In Ctach");
+   }finally{
+    System.out.println("In finally");
+  }
+ }
+}
+o/p-In try
+    In finally
+
+
+.ex-
+class FinallyDemo{
+  public static void main(String[] args){
+    try{
+      System.out.println("In try");
+      System.out.println(10/0);
+  }catch(Exception e){
+    System.out.println("In Ctach");
+   }finally{
+    System.out.println("In finally");
+  }
+ }
+}
+o/p-In try
+    In catch
+    In finally
+
+
+.ex- for br.close() we have to write throws IOexception afterpublic static as after finally we can not write catch to handle the IOexception
+
+import java.io.*;
+class FinallyDemo{
+  public static void main(String[] args)throws IOException{
+   InputStreamReader isr= new InputStreamReader(System.in);
+      BufferedReader br =new BufferedReader(isr);
+    try{
+      System.out.println("In try");
+      System.out.println(br.readLine());
+  }catch(Exception e){
+    System.out.println("In Ctach");
+   }finally{
+    System.out.println("In finally");
+   br.close();
+  }
+ }
+}
+o/p-In try
+    shashi
+    shashi
+    In finally
+
+
+
+******************************************************************************************************************************************************************************
+#Multiple Finally
+
+import java.io.*;
+class FinallyDemo{
+  public static void main(String[] args)throws IOException{
+   InputStreamReader isr= new InputStreamReader(System.in);
+      BufferedReader br =new BufferedReader(isr);
+    try{
+      System.out.println("In try");
+      System.out.println(br.readLine());
+  }catch(Exception e){
+    System.out.println("In Ctach");
+   }finally{
+    System.out.println("In finally");
+  }finally{
+    System.out.println("In finally");
+  }
+ }
+}
+o/p-error
+
+
+Note-we cannot write multipe finally in try catch
+
+
+******************************************************************************************************************************************************************************************
+#Nested Try catch finally
+
+ class NestedDemo{
+  public static void main(String[] args){
+    try{
+           System.out.println("In outer try");
+           try{
+            System.out.println("Inside inner try");
+            System.out.println(10/0);
+         }catch(AritmeticException ae){
+            System.out.println("Inside Inner catch(try)");
+         }
+   }catch(NullPointerException npe){
+          System.out.println("In outer catch");
+            try{
+                System.out.println("Inside outer try");
+             }catch(ArithmeticException ae){
+               System.out.println("Inside Inner catch(catch)");
+              }
+   }finally{
+       System.out.println("In finally");
+           try{
+                System.out.println("Inside try(finally)");
+             }catch(ArithmeticException ae){
+               System.out.println("Inside Inner catch(final)");
+              }
+  }  
+ }
+}
+o/p-In outer try
+   Inside inner ry
+    Inside Inner catch(try)
+    In finally
+    Inside try(finally)
+
+***********************************************************************************************************************************************************************************
+#Throws and throw
+
+. we can not applay throws to class-->
+class ThrowsDemo throws ArithmeticException{
+  public static void main(String[] ags){
+
+
+  }
+}
+0/p-error
+
+
+
+.we acn write throws to methods-->
+class ThrowsDemo {
+  public static void main(String[] ags)throws ArithmeticException{
+
+
+  }
+}
+o/p-compiles sucessfully
+
+
+
+.we acn write throws to constructor-->
+class ThrowsDemo {
+   ThrowsDemo()throws ArithmeticException{
+    }
+  public static void main(String[] ags){
+
+  }
+}
+o/p-compiles sucessfully
+
+
+
+.we can not  write throws to static block-->
+class ThrowsDemo {
+    static throws ArithmeticException{
+     }
+   ThrowsDemo(){
+    }
+  public static void main(String[] ags){
+
+  }
+}
+o/p-error
+
+
+
+.we can write own exception class in throws-->
+ class MyException extends Exception{
+
+}
+class ThrowsDemo{
+  public static void main(String[] args)throws MyException  //own exception class{
+   
+   }
+}
+o/p-compiles sucessfully
+ 
+notes->but while writing that class we have to extends parent Exception class or for run time RuntieException
+
+
+
+.we can write own exception class or multiple exception class in throws-->
+ class MyException extends Exception{
+
+}
+class ThrowsDemo{
+  public static void main(String[] args)throws MyException,ArithmeticException{
+   
+   }
+}
+o/p-compiles sucessfully
+
+
+***********************************************************************************************************************************************************************************
+
+#throw
+
+
+.throw for predefined-->
+
+ex-
+class ThrowDemo{
+
+   public static void main(String[] args){
+      throw new ArithmeticException("Divide by zero");  
+ 
+  }
+}
+o/p-exception in thread main'Arithmetic Exception':Divide by zero
+
+note-we can write custmize exception message with throw
+
+
+ex-
+class ThrowDemo{
+  static ArithmeticException ae=new ArithmeticException();
+   public static void main(String[] args){
+     throw ae;
+  }
+}
+o/p-exception in thread main 'ArithmeticException'
+
+
+ex-
+class ThrowDemo{
+  static ArithmeticException ae=null;
+   public static void main(String[] args){
+     throw ae;
+  }
+}
+o/p-exception in thread main 'NullpointerException'
+
+Note-throw NUllpointerException not arithmetic exception as object is throw but the exception is null pointer exception
+
+******************************************************************************************************************************************************************************
+#working of IOException using throw-->
+
+ex-
+import java.io.*;
+class ThrowDemo{
+  static IOException io=new IOException();
+   public static void main(String[] args){
+     throw ae;
+  }
+}
+o/p-error exception must be thrown
+
+
+
+import java.io.*;
+class ThrowDemo{
+  static IOException io=new IOException();
+   public static void main(String[] args)throws IOException{
+     throw io;
+  }
+}
+o/p-compile sucessfully
+
+
+
+
+import java.io.*;
+class ThrowDemo{
+  static IOException io=new IOException();
+   public static void main(String[] args){
+       try{
+     throw io;
+    }catch(IOException obj){
+         System.out.println(obj);//printException
+    }
+  }
+}
+o/p-java.io.IOException(compile sucessfully)
+
+
+
+import java.io.*;
+class ThrowDemo{
+  static IOException io=new IOException("apalch exception");
+   public static void main(String[] args){
+       try{
+     throw io;
+    }catch(IOException obj){
+         System.out.println(obj);//calls to string method and print msg which we write
+    }
+  }
+}
+o/p-java.io.IOException:Aplach exception(compile sucessfully)
+
+************************************************************************************************************************************************************************************
+
+#Custumize Exception 
+
+ex-
+class MyException extends Exception{
+
+
+
+}
+class CustomisedException{
+  public static void main(String[] args){
+    try{
+         System.out.println("In try");
+      throw new MyException("Customized Exception");
+   } catch(MyException me){
+       System.out.println("In Catch");
+   }
+ }
+}
+o/p-error parameterized constructor is not their in myException
+
+
+ex-
+class MyException extends Exception{
+ String msg=null;
+  MyException(String str){
+    msg=str;
+ }
+}
+class CustomisedException{
+  public static void main(String[] args){
+    try{
+         System.out.println("In try");
+      throw new MyException("Customized Exception");
+   } catch(MyException me){
+       System.out.println("In Catch");
+      System.out.println(me);
+   }
+ }
+}
+o/p-In try
+    In catch
+  Myexception
+
+Note- for custumized exception class to have the msg on output that we put on throw their are some changes required see the follwing example
+
+
+ex-
+
+class MyException extends Exception{
+ String msg=null;
+  MyException(String str){
+    msg=str;
+ }
+ public String toString(){
+    return msg;
+  }
+}
+class CustomisedException{
+  public static void main(String[] args){
+    try{
+         System.out.println("In try");
+      throw new MyException("Customized Exception");
+   } catch(MyException me){
+       System.out.println("In Catch");
+      System.out.println(me.toString());
+   }
+ }
+}
+o/p-In try
+    In catch
+  Customized Exception
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

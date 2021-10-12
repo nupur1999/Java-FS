@@ -1,0 +1,113 @@
+#StringBuffer-when we make a string using StringBuffer it makes object on heap not on SCP thats whay String in Stringbuffer is not immutable.
+   
+Syntax-
+ex-  
+ class StringDemo{
+  public static void main(String[] args){
+
+           StringBuffer sb1=new StringBuffer("pune");//Pune
+             StringBuffer sb2="mumbai";//error not work in StringBuffer
+         }
+ }
+
+***************************************************************************************************************************************************************************************
+.Append method in StringBuffer
+ex 1-
+ class StringDemo{
+  public static void main(String[] args){
+           StringBuffer sb=new StringBuffer();//size is 16 charecter
+           StringBuffer sb1=new StringBuffer("pune");
+           StringBuffer sb2=new StringBuffer("Phaltan");
+           StringBuffer sb3=new StringBuffer("Baramati");             
+
+                       System.out.println(sb);
+                       System.out.println(sb1);
+                       System.out.println(sb2);
+                       System.out.println(sb3);
+          
+              sb.append("Core2web");
+              sb1.append("MH-12");
+              sb2.append("MH-11");
+              sb3.append("MH-42");
+
+                   
+                       System.out.println(sb);
+                       System.out.println(sb1);
+                       System.out.println(sb2);
+                       System.out.println(sb3);
+          
+         }
+ }
+ o/p-> --(blank)
+         pune
+        phaltan
+        Baramati
+        Core2web
+       puneMH-12
+       PhaltanMH-11
+      BaramatiMH-42
+
+************************************************************************************************************************************************************************************
+  
+                             object
+                          /         \
+                         /           \
+                        /             \
+            string                    AbstractStringBuilder
+                                               |            
+                                               |
+                                         StringBuffer
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

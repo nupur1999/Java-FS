@@ -1,0 +1,660 @@
+1)String s1="Core2web";                   ---->String literal
+2)String s2= new String("Core2 web");     ---->String Object
+3)Sting s3="Biencaps";
+4)String s4=new String("Bilearn");
+
+
+#1)String literal goes on SCP
+
+Java 1.6
+
+      Method Area             |              Heap                 |          Java Stack      |
+---------------------------------------------------------------------------------------------|   
+                              |                                   |                          |    
+
+                              |                                   |                          |
+     
+                              |                                   |                          |
+   
+                                                                  |--------------------------|
+
+                              |                                   |         s1 |100|         |---->>Main
+
+                              |                                   |                          |
+                              |
+     
+                                                                  |                          |
+ SCP -->    Core2web          |
+                    \                                             |                          |
+                     100      |
+                                                                 
+                              |                                   |                          |
+     
+                                                                  
+                                                                 
+
+*************************************************************************************************************************************************
+
+
+#2)String object goes on heap
+
+Java 1.6
+
+      Method Area             |              Heap                 |          Java Stack      |
+---------------------------------------------------------------------------------------------|   
+                              |                                   |                          |    
+
+                              |                                   |                          |
+     
+                              |                                   |                          |
+   
+                              |   Object-->Constructor            |--------------------------|
+                                                   Core2web                 s1 |100|
+                              |                       \           |         s2 |200|         |---->>Main
+                                                       200
+                              |                                   |                          |
+                              |
+     
+                                                                  |                          |
+ SCP -->    Core2web          |
+                    \                                             |                          |
+                     100      |
+                                                                 
+                              |                                   |                          |
+     
+                                                                  
+                                                                 
+ *********************************************************************************************************************************************************
+
+#3)For string literal S3 comulsary goes on scp
+
+Java 1.6
+
+      Method Area             |              Heap                 |          Java Stack      |
+---------------------------------------------------------------------------------------------|   
+                              |                                   |                          |    
+
+                              |                                   |                          |
+     
+                              |                                   |                          |
+   
+                              |   Object-->Constructor            |--------------------------|
+                                                   Core2web                 s1 |100|
+                              |                       \           |         s2 |200|         |---->>Main
+                                                       200                  s3 |700| 
+                              |                                   |                          |
+                              |
+     
+                                                                  |                          |
+ SCP -->    Core2web          |
+                    \                                             |                          |
+                     100      |
+            Biencaps                                                     
+                    \         |                                   |                          |
+                     700
+                                                                  
+                                                                
+
+********************************************************************************************************************************************************
+
+#4)For string object S4 it goes on heap but if that string it is not present on SCP then it also goes on SCP
+
+Java 1.6
+
+      Method Area             |              Heap                 |          Java Stack      |
+---------------------------------------------------------------------------------------------|   
+                              |                                   |                          |    
+
+                              |                                   |                          |
+     
+                              |                                   |                          |
+   
+                              |   Object-->Constructor            |--------------------------|
+                                                   Core2web                 s1 |100|
+                              |                           \       |         s2 |200|         |---->>Main
+                                                           200              s3 |700| 
+                              |                     Bilearn       |         s4 |300|         |
+                              |                            \
+                                                            300
+                                                                  |                          |
+ SCP -->    Core2web          |
+                    \                                             |                          |
+                     100      |
+            Biencaps                                                     
+                    \         |                                   |                          |
+                     700
+             Bilearn          |
+                   \          |
+                   400(without|                                   |                          |
+                     refrence)|                                   |                          |
+
+
+
+
+Highlight--->
+             # String Object
+                  /\
+                 /  \  
+heap(with refrence)  SCP(if that string is not present on SCP That string also goes on SCP but without refrence if already present then not goes on SCP)
+
+
+
+             #  String
+                  |
+                  |
+                 SCP(with refrence)
+
+
+*************************************************************************************************************************************************************************************
+#example to understand
+String obj1=new String("CSK");--on heap with refrence(600) & on SCP without refrence(100) thierfore Address of CSK in SCP is different
+String obj2=new String("MI");--on heap with refrence(700) & on SCP without refrence(200) thierfore Address of MI in SCP is different
+String obj3="RCB";       ----on SCP with refernce(300)
+String obj4=new String("MI");---new object on heap as it already present but new object is created with refrence(800) and without refrence on SCP(200)
+String obj5="RCB";   ---SCP already has RCB then it dont make new string take the previous refrence(300)
+String obj6="CSK";   ---SCP already has CSK string it gives reference to that CSK(100)
+
+
+Java 1.6
+
+      Method Area             |              Heap                 |          Java Stack      |
+---------------------------------------------------------------------------------------------|   
+                              |                                   |                          |    
+
+                              |                                   |                          |
+     
+                              |                                   |                          |
+   
+                              |   Object-->Constructor            |--------------------------|
+                                                   CSK                      obj1 |600|
+                              |                        \          |         obj2 |700|       |---->>Main
+                                                        600                 obj3 |300| 
+                              |                     MI            |         obj4 |800|       |
+                              |                         \                   obj5 |300| 
+                                                         700                obj6 |100| 
+                                                    MI            |                          |
+ SCP -->    CSK               |                         \
+                    \                                    800      |                          |
+                     100      |
+            MI                                                    
+                    \         |                                   |                          |
+                     200
+             RCB              |
+                   \          |
+                   300        |                                   |                          |
+                              |                                   |                          |
+
+
+    
+
+************************************************************************************************************************************************************************************
+# Code for String
+ 
+  String s1= "Core2web";
+  String s2= new String("Core2web");
+  String s3="Core2web";
+  String s4=new String("Coreweb");
+
+JVM arcitecture-->
+Java 1.6
+
+      Method Area             |              Heap                 |          Java Stack      |
+---------------------------------------------------------------------------------------------|   
+                              |                                   |                          |    
+
+                              |                                   |                          |
+     
+                              |                                   |                          |
+   
+                              |   Object-->Constructor            |--------------------------|
+                                                Core2web                    s1 |600|
+                              |                        \          |         s2 |700|         |---->>Main
+                                                        700                 s3 |600| 
+                              |                                   |         s4 |800|         |
+                              |                   Core2web                       
+                                                          \       |                          |
+ SCP -->   Core2web           |                            800
+                    \                                             |                          |
+                     600      |
+                                                               
+                              |                                   |                          |
+----------------------------------------------------------------------------------------------           
+
+
+ ex- 
+                                                                                                                                                                             
+class StringDemo{
+   public static void main(String[] args){
+    String s1="Core2web";//scp
+    String s2= new String("Core2web");//heap-ref  scp-withoutrefrence
+    String s3="Core2web"; //scp
+    String s4= new String("Core2web");//heap-ref  Scp-withoutrefrence
+
+  System.out.println(s1);
+  System.out.println(s2);
+  System.out.println(s3);
+  System.out.println(s4);
+
+ System.out.println(s1 == s2);//compare adress of s1 and s2  and gives boolean value in return//false
+ System.out.println(s1 == s3);//true
+ System.out.println(s2 == s4);//false
+
+}
+}
+o/p-Core2web
+    Core2web
+   Core2web
+   Core2web
+   false
+   true
+   false
+
+*****************************************************************************************************************************************************************************
+#intern in string-intern method is used in string to give refrence on SCP when  string is made with object.
+
+
+String s5= new String("Biencaps");
+String s6="Biencaps";
+SOP(s5==s6);//false
+s5.intern();
+sop(s5==s6);//false
+s5=s5.intern();
+sop(s5==s6);//true
+
+
+
+ ex- 
+                                                                                                                                                                             
+class StringDemo{
+   public static void main(String[] args){
+    
+    String s5= new String("Biencaps");
+    String s6="Biencaps";
+
+      System.out.println(s5);
+      System.out.println(s6);
+     System.out.println(s5 == s6);//compare adress of s1 and s2  and gives boolean value in return//false
+
+     s5.intern();
+     System.out.println(s5 == s6);//false (bcz we dont assign the address of s5)
+  
+     s5= s5.intern();
+     System.out.println(s5 == s6);//true 
+}
+}
+
+*****************************************************************************************************************************************************************************
+#String Constructor 
+
+.non-parameterized -->
+class StringConstrDemo{
+   public static void main(String[] args){
+    String s1=new String();
+    System.out.println(s1);//null
+    System.out.println(s1.length());//0
+    }
+} 
+o/p-> ---(blank)
+          0
+
+.parameterized constructor-->
+
+class StringConstrDemo{
+   public static void main(String[] args){
+    String s2=new String("Core2web");
+    System.out.println(s2);//Core2web
+    System.out.println(s1.length());//8
+    }
+} 
+o/p-Core2web
+     8
+******************************************************************************************************************************************
+.charector array constructor--> String(char[])-> in string class. [object of string class with char array-> String s3=new String(char []arr)]
+                           char[] name={'S','h','a','s'}
+                           String obj=new String(name);
+                            sop(obj);//shas
+
+
+.byte array constructor --> String(byte[]) in string class
+                      byte[] brr={100,101,102,103,104}
+                     String obj=new String(brr);
+                     sop(obj);//defgh
+
+
+ex-
+class StringConstrDemo{
+   public static void main(String[] args){
+    char name[]={'s','h','a','s','h','i'};
+          String obj=new String(name);
+             System.out.println(obj);
+     byte[] brr={100,101,102,103,104}
+         String obj1=new String(brr);
+             System.out.println(obj1);
+}   
+}
+o/p-shashi
+    defgh
+
+*******************************************************************************************************************************************************************
+
+#String Method-
+
+ String s1="Shashi";
+ String s2=new String("Shashi");
+    
+1.( == )-->it will check the adress(refrence) of s1 and s2
+   SOP(s1==s2)//false3
+
+
+2.equals-->IF you want to check the content equals method is used.it is case sensitive
+        SOP(s1.equals(s2))//true
+
+*boolean equals(string)
+.first compare length
+.then comper indexvalue
+.case sensetive
+
+ex-
+class StringDemo{
+ public static void main(String[] args){
+    String s1="Shashi";
+    String s2=new String("Shashi");
+
+    System.out.println(s1==s2); //false
+    System.out.println(s1.equals(s2));//true
+  }
+}
+o/p-false
+    true
+
+
+highlights-equals is a object class method which inherit in string class. implemention of eqauals are different in both class. updation  of eqauls method is done is String class as object
+           class equals method dont check content it check address(refrence) but equals method of string class is inherited from Object class.
+
+
+
+3.equalsIgnoreCase->same as equals but it is caseinsensitive 
+
+.first compare length
+.then compare indexvalue
+.case insensetive
+
+ex-
+ class StringDemo{
+ public static void main(String[] args){
+    String s1="Shashi";
+    String s2=new String("shashi");
+
+    System.out.println(s1==s2); //false
+    System.out.println(s1.equals(s2));//false
+   System.out.println(s1.equalsIgnoreCase(s2));//true
+  }
+}
+o/p-false
+    false
+    true
+
+4.compareTo-->compare two string and return int value.
+        
+  *int compareTo(string)
+     .first compare indexvalue
+     .then compare length
+     .case sensetive
+
+    class StringDemo{
+          public static void main(String[] args){
+               String s1="Shashi";
+               String s2=new String("Shashi");
+               String s3="Biencaps";
+               String s4=new String("Bielearn");
+               String s5=new String("SHASHI");
+               String s6="Shashikant";
+ 
+            System.out.println(s1.equals(s2));//true
+            System.out.println(s1.equals(s5)) ;//false
+      
+            System.out.println(s1.equalsIgnoreCase(s5));//true
+     
+            //Scenario 1:if two string are same
+            System.out.println(s1.compareTo(s2));  //0
+
+            //Scenario 2:index value is different and length is different
+            System.out.println(s1.compareTo(s3));  //17
+            System.out.println(s3.compareTo(s1));  //-17 
+
+                //Scenario 2.1:length is different
+               System.out.println(s1.compareTo(s6)); //-4
+
+              //Scenario 3:index value is different  and length is same
+             System.out.println(s3.compareTo(s4)); //2
+              }
+     }
+
+
+
+5.concat-->
+
+ *String concat(String){
+       return new String("ShashiBagal");//object makes on heap
+  }
+
+ Note-String is immutable thats why it dont concat Shashi and bagal on SCP it makes new object on heap.
+
+ex 1)  
+class StringDemo{
+            public static void main(String[] args){
+             String s1= "Shashhi";
+             String s2= "Bagal";
+        
+              s1.concat(s2);
+              
+             System.out.println(s1);   //Shashi(bcz we print s1 and s1 is on scp and on scp it is Shashi not Shashibagal.bcz string is immutable)
+             System.out.println(s2);   //Bagal
+
+            System.out.println( s1.concat(s2)); //ShashiBagal(makes new object on heap)
+
+    s1=s1.concat(s2); //ShashiBagal(makes object on heap with s1 refrence and as we make refrence to s1 on heap from SCP so now we can not print shashi and s1 become shashiBagal on heap.)
+    s3=s1.concat(s2);//makes new object on heap with different refrence.
+    }
+}
+
+
+ex 2)
+class StringDemo{
+            public static void main(String[] args){
+             String s1= new String("Shashhi");
+             String s2= "Bagal";
+        
+              s1.concat(s2);
+              
+             System.out.println(s1);   //Shashi
+             System.out.println(s2);   //Bagal
+
+            System.out.println( s1.concat(s2)); //ShashiBagal
+
+    s1=s1.concat(s2); //ShashiBagal
+    s3=s1.concat(s2);//ShashiBagal
+    }
+}
+
+
+ex 3)
+class StringDemo{
+            public static void main(String[] args){
+             String s1= new String("Shashhi");
+             String s2= new  String("Bagal");
+        
+              s1.concat(s2);
+              
+             System.out.println(s1);   //Shashi
+             System.out.println(s2);   //Bagal
+
+            System.out.println( s1.concat(s2)); //ShashiBagal
+
+    s1=s1.concat(s2); //ShashiBagal
+    s3=s1.concat(s2);//ShashiBagal
+    }
+}
+
+
+
+Highlight-concat makes new object on heap .If it is from heap or from scp it makes new object on heap.
+
+
+6.replace
+
+class StringDemo{
+  public static void main(String[] args){
+       
+         String s1= new  String("Kanhaiya");
+           System.out.println(s1); //Kanhaiya
+              s1.replace('a','p');
+           System.out.println(s1);  //Kanhaiya
+           System.out.println( s1.replace('a','p')); //kpnhpiya 
+}
+}
+
+
+
+7.startsWith
+ 
+class StringDemo{
+  public static void main(String[] args){
+       
+         String s1= new  String("Bielearn");
+          String s2= new  String("BieMedia");
+           String s3= new  String("CivicGen");
+           
+           System.out.println(s1); //Bielearn
+           System.out.println(s2); //BieMedia
+            System.out.println(s3); //CivilGen
+
+            System.out.println(s1.startWith("Bie")); //true
+             System.out.println(s2.startWith("Bie")); //true
+              System.out.println(s3.startWith("Bie")); //false
+         
+}
+}
+
+
+
+7.endsWith
+ 
+class StringDemo{
+  public static void main(String[] args){
+       
+         String s1= new  String("Bielearn");
+          String s2= new  String("BieMedia");
+           String s3= new  String("CivicGen");
+           
+           System.out.println(s1); //Bielearn
+           System.out.println(s2); //BieMedia
+            System.out.println(s3); //CivilGen
+
+            System.out.println(s1.endstWith("earn")); //true
+             System.out.println(s2.endsWith("Bie")); //false
+              System.out.println(s3.endsWith("Gen")); //true      
+}
+}
+
+
+8.indexOf
+
+class StringDemo{
+  public static void main(String[] args){
+       
+         String s1= new  String("Bielearn");
+         String s2= new  String("BieMedia");
+         String s3= new  String("BieTickets");
+  
+        System.out.println(s1.indexOf('l')); //3         
+        System.out.println(s1.indexOf('e'));  //2  (gives first e index in s1)
+        System.out.println(s1.indexOf('e',3)); //4  (gives index value of e from 3rd index)
+        System.out.println(s1.indexOf("learn")); //3
+        System.out.println(s1.indexOf("learn",5)); //-1
+        System.out.println(s1.indexOf("learn",4)); // (gives index value of String starting value from 4 index)
+}
+}
+
+9.lastIndexOf
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                                                                                                                                                                                                             
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+       

@@ -1,0 +1,245 @@
+#Absraction-
+To avoid overriding we use abstraction.
+
+-abstract class is an incomplete class
+-we used keyword 'abstract' to do method or class abstract
+-their is 0 to 100% abstraction
+-object can not be created from abstract class 
+- we can create refrence for abstract class
+-abstract class has constructor
+
+1. If thier is one or more than one non-concrete(abstract) method then class should be abstract class other wise gives error
+
+classs Biryani {
+    void taste();
+    void quality();
+    void price();
+  }
+
+o/p- error(declare abstract class)
+
+
+2. If their is all concrete method(non-abstract) but class is abstract it works bcz abstraction has 0 to 100% abstraction
+
+abstract class Biryani {
+    void taste(){
+    }
+    void quality(){
+    }
+    void price(){
+    }
+  }
+
+
+3. we have to write abstract keyword before the method name if you want to declare that method abstract
+abstract classs Biryani {
+    void taste(){
+    
+    }
+     abstract void quality();
+    void price();//error (for non-concrete method before method name their should write abstract keywoard)
+  }
+
+
+
+4. abstract method should be written in the extend class
+
+
+abstract classs Biryani {
+    void taste(){
+ System.out.println("Tasty");
+    }
+    abstract void quantity();
+    abstract void price();
+    }
+class pkbiryani extends Biryani{
+ }
+
+
+o/p- error(abstract method should be wriiten in extend class)
+
+
+
+5.if the extend class is also abstract then it works
+
+abstract classs Biryani {
+    void taste(){
+ System.out.println("Tasty");
+    }
+    abstract void quantity();
+    abstract void price();
+  }
+abstract class pkbiryani extends Biryani{
+ }
+
+
+work sucessfully
+
+
+
+6.example of abstraction
+
+abstract classs Biryani {
+    void taste(){
+ System.out.println("Tasty");
+    }
+   abstract void quantity();
+   abstract void price();
+    }
+
+class pkBiryani extends Biryani{
+   
+    void quantity(){
+       System.out.println("Jasta");
+     }
+    void price(){
+       System.out.println("Average");
+     }
+   }
+class DorabjiBiryani extends Biryani{
+   
+    void quantity(){
+       System.out.println("kami");
+     }
+    void price(){
+       System.out.println("High");
+     }
+   }
+
+
+
+7.Object of abstract class can not be make 
+
+abstract classs Biryani {
+    void taste(){
+ System.out.println("Tasty");
+    }
+   abstract void quantity();
+   abstract void price();
+    }
+
+class pkBiryani extends Biryani{
+   
+    void quantity(){
+       System.out.println("Jasta");
+     }
+    void price(){
+       System.out.println("Average");
+     }
+   }
+class DorabjiBiryani extends Biryani{
+   
+    void quantity(){
+       System.out.println("kami");
+     }
+    void price(){
+       System.out.println("High");
+     }
+   }
+class AbstractDemo{
+public static void main(String[] args){
+       Biryani b=new Biryani();
+
+}
+}
+
+o/p-compile time error
+
+ 
+
+8. Abstract class can be use as refrence class with object of the extents class
+
+abstract classs Biryani {
+    void taste(){
+ System.out.println("Tasty");
+    }
+   abstract void quantity();
+   abstract void price();
+    }
+
+class pkBiryani extends Biryani{
+   
+    void quantity(){
+       System.out.println("Jasta");
+     }
+    void price(){
+       System.out.println("Average");
+     }
+   }
+class DorabjiBiryani extends Biryani{
+   
+    void quantity(){
+       System.out.println("kami");
+     }
+    void price(){
+       System.out.println("High");
+     }
+   }
+class AbstractDemo{
+public static void main(String[] args){
+       Biryani b=new pkBiryani();
+       b.quantity();//Jasta
+       Biryani b1=new DorabjiBiryani();
+       b1.quantity();//kami
+
+}
+}
+
+o/p-Jasta
+   Kami
+
+
+
+
+9.abstract class has constructor
+
+abstract classs Biryani{
+ Biryani(){
+  System.out.println("Biryani constructor");
+   }
+    void taste(){
+ System.out.println("Tasty");
+    }
+   abstract void quantity();
+   abstract void price();
+    }
+
+class pkBiryani extends Biryani{
+   pkBiryani(){
+  System.out.println("pkBiryani constructor");
+   }
+    void quantity(){
+       System.out.println("Jasta");
+     }
+    void price(){
+       System.out.println("Average");
+     }
+   }
+class DorabjiBiryani extends Biryani{
+   DorabjiBiryani(){
+  System.out.println("DorabjiBiryani constructor");
+   }
+    void quantity(){
+       System.out.println("kami");
+     }
+    void price(){
+       System.out.println("High");
+     }
+   }
+class AbstractDemo{
+    public static void main(String[] args){
+       Biryani b=new pkBiryani();//calls biryani and pk biryani constructor
+       b.quantity();//Jasta
+       Biryani b1=new DorabjiBiryani();//calls biryani and dorabjibiryani constructor
+       b1.quantity();//kami
+
+    }
+  }
+
+o/p-Biryani constructor
+     pkBiryani constructor
+   Jasta
+   Biryani constructor
+   DorabjiBiryani constructor
+   Kami
+

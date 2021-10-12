@@ -1,0 +1,665 @@
+#Interface-Interface is a class in which implemention of methods is fully depend on child class.
+
+-Interface which having compulsary all abstract method which is overridding in child class.In this  Interface  implement another class. 
+1.In interface class 100% absraction needed
+2. Methods in interface are bydefault public abstract
+3.Object can not be created in interface
+4.constructor is not available in Interface 
+5.Interface does not have parent class
+
+*******************************************************************************************************************************************************************************************
+
+1.In interface class 100% absraction needed
+
+interface RBI{
+   void m1(){
+     }
+  }
+ 
+
+o/p-error(interface abstract method can not have body)
+
+*******************************************************************************************************************************************************************************************
+2. Methods in interface are bydefault public abstract
+
+interface RBI{
+   void m1();
+  }
+ 
+o/p-compile sucesssfully
+
+Highlight-To see bytecode the method is public abstract or not 
+ ............. $ javap-c RBI.class
+interface RBI{
+ public abstract void m1();
+} 
+
+*******************************************************************************************************************************************************************************************
+3.one Interface  implements another class.
+
+ex-
+interface RBI{
+   void m1();
+  }
+class SBI extends RBI{
+}
+o/p-error
+
+
+ex-
+interface RBI{
+   void m1();
+  }
+class SBI implements RBI{
+}
+o/p-error (bcz void m1 is abstract needed to give body in SBI) 
+
+
+ex-
+interface RBI{
+   void m1();
+  }
+abstract class SBI implements RBI{
+}
+o/p-compile sucessfully
+
+
+
+3.1)scope of child class greater than or eual to parent class
+  ex-
+interface RBI{
+   void m1();
+  }
+class SBI implements RBI{
+ void m1(){
+   }
+}
+o/p-error
+
+
+ex-
+interface RBI{
+   void m1();
+  }
+class SBI implements RBI{
+ public void m1(){
+   }
+}
+Note- void m1 () should be public bcz in interface void m1 is public abstract and we can not make scope lower than parent class in inheritance. 
+o/p-compile sucessfully
+
+*******************************************************************************************************************************************************************************************
+4.One interface extends another Interface.
+
+ex-
+interface RBI{
+   void m1();
+  }
+interface SBI implements RBI{
+   } 
+o/p-error
+
+
+ex-
+interface RBI{
+   void m1();
+  }
+interface SBI extends RBI{
+  }
+ 
+******************************************************************************************************************************************************************************************
+5.One class cannot extends or impements another interface.
+
+ex-
+class RBI{
+   void m1();
+  }
+interface SBI implements RBI{
+   } 
+o/p-error
+
+ex-
+class RBI{
+   void m1();
+  }
+interface SBI extends RBI{
+   } 
+o/p-error
+
+
+ex-
+abstract class RBI{
+   void m1();
+  }
+interface SBI implements RBI{
+   } 
+o/p-error
+
+ex-
+abstract class RBI{
+   void m1();
+  }
+interface SBI extends RBI{
+   } 
+o/p-error
+
+NOte- if we extends and implements the abstract class or simple class in interface .by default by inheritance it will have to give body abstract class method or have acess to simple class
+ method which is not allowed in interface.In interface it should have all public abstract method. method body is not allowed in interface. 
+
+
+
+*************************************************************************************************************************************************************************************
+
+#multiple inheritance by interface
+
+ex-
+
+interface class RBI{
+   void loanType();        (extends object)
+   void ROI();            /
+  }                      /
+class SBI implements RBI/{
+     //SBI{ super();} calls object class constructor as interface dont have constructor
+   }
+
+
+
+.Highlight->
+
+    RBI-class   Object-class
+         \       /
+          \     /              ----->multiple inheritance
+           \   /
+          SBI-class
+
+
+
+**********************************************************************************************************************************************************************************
+3.Object can not be created in interface
+
+interface class RBI{
+   void loanType();
+   void ROI();
+  }
+class SBI implements RBI{
+  public void loanType(){
+  System.out.println("Home Loan");
+    }
+   public void ROI(){
+  System.out.println("8.95");
+    }
+   }
+class customer{
+  public static void main(String[] args){
+  RBI r=new RBI();//error
+  }
+  }
+o/p-error
+
+  
+3.1) refrence of interface and object of child class/implemented class -->work
+interface class RBI{
+   void loanType();
+   void ROI();
+  }
+class SBI implements RBI{
+  public void loanType(){
+  System.out.println("Home Loan");
+    }
+   public void ROI(){
+  System.out.println("8.95");
+    }
+   }
+class customer{
+  public static void main(String[] args){
+  RBI s=new SBI();
+  s.loanType();
+  }
+  }
+
+o/p-Home Loan
+
+
+******************************************************************************************************************************************************************************************
+5.Interface support inheritance
+
+interface A{
+  void m1();
+ }
+interface B{
+  void m2();
+ }
+class AB implements B{
+   pubic void m1(){
+   System.out.println("In-m1"); 
+   }
+   pubic void m2(){
+   System.out.println("In-m2"); 
+   }
+  }
+class Test{
+public static void main(String[] args){
+  AB obj=new AB();
+   obj.m1();
+  obj.m2();
+
+ A ref1=new AB();
+  ref.m1();
+  ref.m2();//error (bcz refrence class A dont have void m2 method)
+}
+}
+
+*****************************************************************************************************************************************************************************************
+6.To reduce redundancy we can give body to the method in interface by using default/static(above version 1.8)-->
+
+[ Note-
+  sudo update-alternatives --cong javac-->to change the version of compiler
+  sudo update-alternatives --cong java-->to change the version of java
+ ]
+ 
+ex-
+interface MumbaiMarket{
+ void qaulity();
+ void price();
+}
+class SunilShop implements MumbaiMarket{
+  void quality(){
+    System.out.println("Best Quality");
+   }
+  void price(){
+   System.out.println("500-600");
+  }
+ }
+class TilakroadShop implements MumbaiMarket{
+  void quality(){
+    System.out.println("Best Quality");
+   }
+  void price(){
+   System.out.println("800-900");
+  }
+ }
+
+Nootes-redundacy comes in picture as quality has same code in class TilakroadShop and SuniShop
+o/p-compiles sucessfully 
+
+
+6.1) To reduce redundancy we can give body to the menth in interface by using default(above version 1.8)-->
+
+ex-
+interface MumbaiMarket{
+  default void quality(){
+    System.out.println("Best Quality");
+   }
+ void price();
+}
+class SunilShop implements MumbaiMarket{
+  
+  void price(){
+   System.out.println("500-600");
+  }
+ }
+class TilakroadShop implements MumbaiMarket{
+  void price(){
+   System.out.println("800-900");
+  }
+ }
+
+class test{
+ public stati void main(String[] args){
+ MumbaiMarket obj1=new SunilShop();
+    obj1.quality();
+    obj1.price();
+  MumbaiMarket obj2=new TilakroadShop();
+    obj2.quality();
+    obj2.price();
+  }
+}
+o/p-Best Quality
+    500-600
+    Best Quality
+     800-900
+
+ 
+6.1) To reduce redundancy we can give body to the menth in interface by using static(above version 1.8)-->
+
+
+
+ex-
+interface MumbaiMarket{
+  static void quality(){
+    System.out.println("Best Quality");
+   }
+ void price();
+}
+class SunilShop implements MumbaiMarket{
+  
+  void price(){
+   System.out.println("500-600");
+  }
+ }
+class TilakroadShop implements MumbaiMarket{
+  void price(){
+   System.out.println("800-900");
+  }
+ }
+
+class test{
+ public stati void main(String[] args){
+ MumbaiMarket obj1=new SunilShop();
+    obj1.quality();//quality is static method ca not be override from object of non-static class
+    obj1.price();
+  MumbaiMarket obj2=new TilakroadShop();
+    obj2.quality();
+    obj2.price();
+  }
+}
+o/p-error(static method can not be override from non-static class object)
+
+
+ex-
+interface MumbaiMarket{
+  static void quality(){
+    System.out.println("Best Quality");
+   }
+ void price();
+}
+class SunilShop implements MumbaiMarket{
+  
+  void price(){
+   System.out.println("500-600");
+  }
+ }
+class TilakroadShop implements MumbaiMarket{
+  void price(){
+   System.out.println("800-900");
+  }
+ }
+class test{
+ public stati void main(String[] args){
+ MumbaiMarket obj1=new SunilShop();
+    MumbaiMarket.quality();
+    obj1.price();
+  MumbaiMarket obj2=new TilakroadShop();
+   MumbaiMarket.quality();
+    obj2.price();
+  }
+}
+o/p-Best Quality
+    500-600
+    Best Quality
+     800-900
+
+************************************************************************************************************************************************************************************
+#Nested interface-
+
+1.interface with in interface
+ 
+1.1)In nested interface inner inteface method should have body in child of outer interface class does not required
+ 
+interface outer{
+   void m1();
+       interface Inner{
+         void m2();
+          }
+    }
+class xyz implements outer{
+ public void m1(){
+   }
+}
+o/p-compile sucessfully
+
+
+
+1.2)we can give body to the innerclass method by childs class syntax as given below-
+ 
+interface outer{
+   void m1();
+       interface Inner{
+         void m2();
+          }
+    }
+class xyz implements outer,outer.inner{
+ public void m1(){
+ System.out.println("In m1-method");
+   }
+  public void m2(){
+  System.out.println("In m2-method");
+   }
+}
+
+o/p-compile sucessfully
+
+
+1.3)How to call interface method in overriding
+ 
+interface outer{
+   void m1();
+       interface Inner{
+         void m2();
+          }
+    }
+class xyz implements outer,outer.inner{
+ public void m1(){
+ System.out.println("In m1-method");
+   }
+  public void m2(){
+  System.out.println("In m2-method");
+   }
+}
+class Test{
+public static void main(String[] args){
+    outer out=new xyz();
+      out.m1();
+      out.m2();//error(bcz out.m2() is not a outer interface method)
+    outer.Inner in=new xyz();
+     in.m1(); //error(bcz out.m1() is not a inner interface method)
+     in.m2();
+    xyz obj= new xyz();
+     obj.m1(); 
+     obj.m2();
+}
+}
+
+******************************************************************************************************************************************************************************
+
+2.Interface with in class
+
+
+class outer{
+   void m1(){
+System.out.println("Outer-m1");
+    }
+      interface Inner{
+         void m2();
+          }
+    }
+class xyz extends outer implements outer.inner{
+ public void m1(){
+ System.out.println("In m1-method");
+   }
+  public void m2(){
+  System.out.println("In m2-method");
+   }
+}
+
+class Test{
+public static void main(String[] args){
+    outer out=new xyz();
+      out.m1();
+      out.m2();//error(bcz out.m2() is not a outer class method)
+    outer.Inner in=new xyz();
+     in.m1(); //error(bcz out.m1() is not a inner interface method)
+     in.m2();
+    xyz obj= new xyz();
+     obj.m1(); 
+     obj.m2();
+}
+}
+***********************************************************************************************************************************************************************************
+#Variable in interface
+
+1. Interface dont have problem if we dont exeecute that varible it compiles sucessfully
+interface A{
+ int c=10;
+  void m1();
+ }
+interface B{
+ int c=20;
+  void m1();
+ }
+class AB implements A,B{
+  public void m1(){
+}
+}
+o/p- compile sucessfully
+
+
+2. ambiguty error for variable in interface when we try to acess it
+interface A{
+ int c=10;
+  void m1();
+ }
+interface B{
+ int c=20;
+  void m1();
+ }
+class AB implements A,B{
+  public void m1(){
+System.out.println(c);
+}
+}
+class Test{
+  public static void main(String[] args){
+    A obj=new AB()
+  obj.m1();
+  }
+}
+o/p- error
+
+Note-If you want to acess the interface variable we have to call it with interface name .in above example we have to call variable c in class AB with A.c
+
+3.Variable in Interface is public static Final
+
+3.1 Example of use of variable in interface
+interface A{
+ int c=10;
+  void m1();
+ }
+interface B{
+ int c=20;
+  void m1();
+ }
+class AB implements A,B{
+  public void m1(){
+System.out.println(A.c);
+System.out.println(B.c);
+}
+}
+class Test{
+  public static void main(String[] args){
+    A obj=new AB()
+     obj.m1();
+  }
+}
+
+o/p-10
+    20
+
+
+3.2 what happen if we try to change final variable value 
+interface A{
+ int c=10;
+  void m1();
+ }
+interface B{
+ int c=20;
+  void m1();
+ }
+class AB implements A,B{
+  public void m1(){
+System.out.println(A.c);
+System.out.println(B.c);
+}
+}
+class Test{
+  public static void main(String[] args){
+    A obj=new AB()
+     obj.m1();
+     A.c=30;//error   ((bcz variable x is final and value can not be changed for final variable)
+     B.c=40;//error
+     obj.m1();//error
+  }
+}
+
+o/p-error
+
+
+************************************************************************************************************************************************************
+#anonymous innerclass
+
+1.Ananoymous class with in class
+class player{
+  void playerInfo(){
+  System.out.println("Sachin");
+     }
+}
+class Batsman{
+public static void main(String[] args){
+    player obj=new player(){                   //ananoymous innerclass overriding the Void playerInfo method
+            void playerInfo(){
+            System.out.println("kholi");
+                    }
+      };
+   obj.playerInfo();//kholi
+}
+}
+o/p-kholi
+
+
+
+2.Ananoymous class with in interface
+interface player{
+  void playerInfo();
+}
+class Batsman{
+public static void main(String[] args){
+    player obj=new player(){                   //ananoymous innerclass 
+           public void playerInfo(){
+            System.out.println("kholi");
+                    }
+      };
+   obj.playerInfo();//kholi
+}
+}
+o/p-kholi
+
+*******************************************************************************************************************************************************
+#Marker Interface->The interface having no method is called Marker Interface.It is a special interface used in JVM functinality
+.example of marker Interface-
+1.cloneable Interface
+2.Serializable Interface
+3.RandomAcess Interface
+
+Note-[javap -c java.io.Serializable] to see the byte code is their method is available or not
+     [javap -c java.lang.Cloneable]
+ 
+
+Highlights-object class implements clonable interface so we can make object (dupication of class)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

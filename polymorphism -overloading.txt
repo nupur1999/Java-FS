@@ -1,0 +1,334 @@
+#polymorphism- one name different form  
+ 
+#types of polymorphism 1)overloading (same class)
+                       2)overriding (different class having parent chlid relation)
+
+***********************************************************************************************************************************************************************************
+
+#Method Signature- method signtue is nothing but collection table of method name and their datatypes.At the time of compilation first method signature table is checked.
+  
+1. Compiler check Signature method and do  Automati convertion in data type if possible 
+ex-class xyz{
+ void m1(int x){
+}
+void m2(float y, char z){
+
+}
+public static void main(String[] args){
+xyz obj= new xyz();
+obj.m1(10);
+obj.m1("A");//it will check in method signature if it is not match to datatype.It will not give error directly.It will check if it is convertable to int as int has higher precidence than char wo it is convertable.
+}
+
+Note-At the time when we compile the code it will first check the refrence class and their method then it will check the signiture method in above example the signature table would be like -
+Mwethod Signature:method name(datatype)
+                  m1(int)
+                  m2(float,char)
+
+
+***********************************************************************************************************************************************************************************
+
+#Overloading-In same class with same method name with different datatypes.      
+
+1.class having same method name and same datatye:-gives error
+
+ex- 
+class demo{                                                                      
+void m1(int x){                                                                            
+System.out.println(" INt in m1-1");
+}
+void m1(int y){
+System.out.println(" INt in m1-2");
+}
+public static void main(String[] args){
+xyz obj= new xyz();
+obj.m1(10);// compiler get confuse as it look to method signature table their are two method m1 with same data type so it gives error
+}
+
+ // Method Signature - m1(int),m1(int)
+ o/p-error
+
+
+
+2.class having same method name and different datatye
+
+ex- 
+class demo{                                                                      
+void m1(char x){                                                                            
+System.out.println(" Char in m1-1");
+}
+void m1(int y){
+System.out.println(" INt in m1-2");
+}
+public static void main(String[] args){
+xyz obj= new xyz();
+obj.m1('A');
+obj.m1(10);
+}
+
+ // Method Signature - m1(char),m1(int)
+ o/p-INt in m1-1
+     INt in m1-2
+    
+
+****************************************************************************************************************************************************************************
+
+# Automatic convertion :- 
+ lower presidance ------to ------> higher persidance
+.char->int->long->float->double
+.byte->short->int->long->float->double
+   
+1.In overloading datatype do actomatic pramotion while checking method signature
+
+ex-
+class overloadDemo{
+    void m1(int x){
+       System.out.Println("Int in m1");
+      }
+     void m1(float x){
+       System.out.Println("Float in m1");
+      }
+}
+class Test{
+public static void main(String[] args){
+overloadDemo obj =new overloadDemo();
+obj.m1(10);//Int in m1
+obj.m1('A');//Int in m1 (does Automatic convertion as int has higher presidence than char)
+obj.m1(30l);//Float in m1(does Automatic convertion as float has higher presidence than long)
+obj.m1(30.5f);//Float in m1
+obj.m1(20d);//error(bcz double has higest presidance and not be convertable)
+obj.m1(30.5);//error(bcz double has higest presidance and not be convertable)
+}
+}
+  
+// Method Signature - m1(int),m1(float)
+o/p-Int in m1
+    Int in m1
+    Float in m1
+    Float in m1
+
+
+
+2. ambiguty error while checking method sigature table
+
+class demo{
+
+void m1(int x , float y){
+       System.out.Println("Int-float para");
+      }
+     void m1(float x,int y){
+       System.out.Println("Float-Int in m1");
+      }
+public static void main(String[] args){
+  demo obj= new demo();
+  obj.m1(10.10.5f);//Int-float para
+  obj.m1(10.5f,10);//Float-Int in m1
+  obj.m1(10,10);//ambiguty error compiler get confused as int datatype is also available in void m1(float x,int y)
+  obj.m1(10.5f,10.5f);//error
+  }
+}
+
+// Method Signature - m1(int,float),m1(float,int)
+
+o/p-
+Int-float para
+Float-Int in m1
+
+******************************************************************************************************************************************************************************
+   
+3.Passing pre define class as an argument in overloading (String and stringbuffer as an argument in overloading)
+
+
+class demo{
+
+void m1(String s1){
+       System.out.Println("String method");
+      }
+     void m1(StringBuffer s2){
+       System.out.Println("StringBuffer method");
+      }
+public static void main(String[] args){
+  demo obj= new demo();
+  obj.m1("Shashi");//String method
+   obj.m1(new StringBuffer("Shashi"));//StringBuffer method
+  }
+}
+
+ Note- String s1="shashi"
+       StringBuffer s2=new StringBuffer("Shashi")
+
+o/p-String method
+    StringBuffer method
+
+
+
+ 
+3.1) Ambiguty error in Passing pre define class as an argument in overloading (String and stringbuffer as an argument in overloading)
+
+class demo{
+
+void m1(String s1){
+       System.out.Println("String method");
+      }
+     void m1(StringBuffer s2){
+       System.out.Println("StringBuffer method");
+      }
+public static void main(String[] args){
+  demo obj= new demo();
+  obj.m1("Shashi");//String method
+   obj.m1(new StringBuffer("Shashi"));//StringBuffer method
+  obj.m1(null);/error ambiguty get confused to go in string or stringbuffer
+  }
+}
+
+Note- String s1="shashi"
+       StringBuffer s2=new StringBuffer("Shashi")
+        String s1=null
+       StringBuffer s2=null
+
+
+
+
+3.2)By passing null to parent child reation in predefined class which pass as an argument not give ambiguty error
+
+class demo{
+
+void m1(Object s1){
+ System.out.Println("Object method");
+}
+void m1(String s1){
+       System.out.Println("String method");
+      }
+    
+public static void main(String[] args){
+  demo obj= new demo();
+  obj.m1("Shashi");//String method
+   obj.m1(new Object());//Object method
+  obj.m1(null);//String method (as object is the parent of string class so it allows the string to get the null)
+  }
+}
+ o/p-String method
+     Object method
+     String method
+
+Note- Object s1=new Object();
+      String s1="shashi"
+        String s1=null
+   
+****************************************************************************************************************************************************************************************
+4.Passing  userdefined class as an argument in overloading (String and stringbuffer as an argument in overloading)
+
+
+class Core2web{
+ }
+class Biencaps{
+ }
+class Demo{
+  void m1(Core2web c2w){
+  System.out.println("Core2web Method");
+  }
+  void m1(Biencaps bie){
+  System.out.println("Biencaps Method");
+  }
+  }
+class Test{
+  public static void main(String[] args){
+     Demo obj= new Demo();
+     obj.m1(new Core2web());
+     obj.m1(new Biencaps());
+  }
+  }
+   
+
+o/p-Core2web Method
+    Biencaps Method
+
+************************************************************************************************************************************************************************************
+5.Vargs method -it contains datatype from zero to infenity
+
+class demo{
+void m1(int .... vargs){
+   System.out.println("Varags Method");
+  }
+}
+class Test{
+  public static void main(String[] args){
+     Demo obj= new Demo();
+     obj.m1();//Varags Method
+     obj.m1(10);//Varags Method
+     obj.m1(10,20);//Varags Method
+  }
+  }
+}
+ o/p-Varags Method
+     Varags Method
+     Varags Method
+ 
+*************************************************************************************************************************************************************************************
+6.Vargs method with overloading
+
+
+class demo{
+void m1(int x){
+       System.out.Println("IntMethod");
+      }
+void m1(int .... vargs){
+   System.out.println("Varags Method");
+  }
+}
+class Test{
+  public static void main(String[] args){
+     Demo obj= new Demo();
+     obj.m1();//Varags Method
+     obj.m1(10);// IntMethod (priority given to the void m1(int x) as it has exact count of int datatype as called)
+     obj.m1(10,20);//Varags Method
+     obj.m1('a');//IntMethod 
+  }
+  }
+}
+
+o/p-Varags Method
+     IntMethod 
+     Varags Method
+     IntMethod 
+
+**************************************************************************************************************************************************************************
+
+7.Passing  userdefined class as an argument in overloading in with userdefined class have parent child relation
+
+class Core2web{
+ }
+class Biencaps extends Core2web{
+ }
+class Demo{
+  void m1(Core2web c2w){
+  System.out.println("Core2web Method");
+  }
+  void m1(Biencaps bie){
+  System.out.println("Biencaps Method");
+  }
+  }
+class Test{
+  public static void main(String[] args){
+     Demo obj= new Demo();
+    Core2web c2w=new  Core2web();
+    obj.m1(c2w);//Core2web Method
+     Biencaps bie=new  Biencaps();
+     obj.m1(bie);Biencaps Method
+    Core2web oc2w=new  Biencaps();//refernce paent and object child 
+    obj.m1(oc2w);//Core2web Method(it gives reference class method call)
+  }
+  }
+   
+
+Note- In polymorphism at compile time right side means refernce class is only checked
+o/p-Core2web Method
+   Biencaps Method
+    Core2web Method
+
+
+
+
+
+
+

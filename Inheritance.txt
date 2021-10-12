@@ -1,0 +1,258 @@
+##Inheritance-
+It is the mechanism in java by which one class is allowed to inherit the features(fields and methods) of another class. 
+
+#Types of inheritance-
+1.single inheritance
+2.multilevel inheritance
+3.multiple inheritance not allowed but can be done with interface
+4.hybrid inheritance not allowed
+5.cyclic inheritance not allowed
+6.hierarchical inheritance
+
+***************************************************************************************************************************************************************************
+1.hierarchical inheritance
+
+//1)Parent refrence parent Object
+//2)child reference child Object
+//3)parent reference child Object
+//3.1)In parent reference child Object only parent methods are allowed child methods give compilation error
+//4)child refrence parent object not allowed (bcz we inherit child from parent so we can not make refrence of child over parent) 
+class Core2web {
+    Core2web(){
+   System.out.println("Core2web constructor");
+    }
+    void Learning(){
+        System.out.println("Programming Language");
+        System.out.println("Guide : Shashi");
+    }
+    
+}
+class Incubator extends Core2web{
+    Incubator(){
+        System.out.println("Incubator constructor");
+    }
+    void Implementation(){
+        System.out.println("Projects");
+        System.out.println("Self Learning");
+    }
+    
+}
+ class Network extends Core2web{
+     Network(){
+        System.out.println("Network constructor");  
+     }
+     void Connect(){
+        System.out.println("Coders Community");
+        System.out.println("Guide : professionals");
+    }
+ }
+ 
+ class Students{
+     public static void main(String[] args){
+         //Type1
+         Core2web c2w=new Core2web();
+         c2w.Learning();
+         //Type2
+         Incubator ibtr=new Incubator();
+         ibtr.Implementation();
+         //Type3
+         Core2web obj=new Incubator();
+         obj.Learning();
+         //Type 3.1 
+         //obj.Implementation() (compilation error bcz Implementation is not a method of Core2web it is method of  Incubator. only refrence method are allowed)
+     }
+ 
+ }
+ 
+ 
+************************************************************************************************************************************************************
+2.multilevel-
+example-
+ class ICC{
+  ICC(){
+    System.out.println("ICC constructor");
+    }
+}
+class BCCI extends ICC{
+  BCCI(){
+    System.out.println("BCCI constructor");
+    }
+}
+class IPL extends BCCI{
+   IPL(){
+    System.out.println("IPL constructor");
+     }
+}
+class Matches{
+ public static void main(String[] args){
+  IPL ipl2020=new IPL();
+   }
+}
+
+op-ICC constructor
+   BCCI constructor
+   IPL constructor
+**********************************************************************************************************************
+3.multiple-it gives ambiguty error 
+
+class a{
+ void m1(){
+ System.out.println("Class A -m1");
+}
+}
+class b{
+ void m1(){
+ System.out.println("Class B -m1");
+}
+}
+Class c extends a,b{
+ 
+}
+
+op-error(ambiguty both have m1 method )
+ 
+It could be possible both have same variable name or method name which gives problem for class c to choice so it gives ambiguty error.
+To avoid this error we can use Interface in mutiple inheritance
+*************************************************************************************************************************************************
+5.cyclic inheritance-not allowed
+
+eg-
+class a extends a{
+}
+
+op-cyclic inheritance not allowed
+
+eg-
+class a extends b{
+}
+class b extends a{
+}
+  
+op-cyclic not allowed
+
+**************************************************************
+# Super in inheritance-I want parent
+
+1.call to super must be first statement in constructor not allowed anywhere it must be first line in constructor
+
+class parent{
+parent(){
+super();
+//super(); not allowed
+//super(); not allowed
+SOP("Parent constructor");
+//super(); not allowed
+}
+void m1(){
+//super(); not allowed
+SOP("parents-m1");
+}
+}
+class child extends parent{
+child(){
+super();
+SOP("child constructor");
+}
+void m1(){
+SOP("child-m1");
+}
+public static void main(String[] args){
+child c=new child();
+}
+}
+ 
+***************************************************************
+2. what happent when in main we have given refernce of parent and object of child and method is not present in refrence class
+ex-
+class parent{
+parent(){
+SOP("Parent constructor");
+}
+}
+class child extends parent{
+child(){
+SOP("child constructor");
+}
+void m1(){
+SOP("child-m1");
+}
+public static void main(String[] args){
+parent c=new child();
+c.m1();//gives error bcz m1 method is not present in refrence class. as we have given refrence of parent the method m1 should be in the parent class
+}
+}
+op-error
+ ************************************************************
+3.what happent when in main we have given refernce of parent and object of child and method is present in both refrence class and child class prefrence is given to the child class method first as object is of child class
+ex-
+class parent{
+int x=10;
+parent(){
+SOP("Parent constructor");
+}
+void m1(){
+SOP("parents-m1");
+}
+}
+class child extends parent{
+int x=20
+child(){
+SOP("child constructor");
+}
+void m1(){
+SOP("child-m1");
+SOP("X="+x);
+}
+public static void main(String[] args){
+parent c=new child();
+c.m1();//calls child method not parent bcz object is of child class give prefrence to child method first
+}
+}
+
+op-child constructor
+parent constructor
+child-m1
+20
+
+
+*******************************************************************************
+
+4.use of super keyword to acess the variable and method from parent class . when we have given refrence of parent and object of child
+class parent{
+int x=10;
+parent(){
+SOP("Parent constructor");
+}
+void m1(){
+SOP("parents-m1");
+}
+}
+class child extends parent{
+int x=20
+child(){
+SOP("child constructor");
+}
+void m1(){
+SOP("child-m1");
+SOP("X="+super.x);//10//call to parent varible x
+SOP("X="+x);//20
+super.m1();//call to parent method m1
+}
+public static void main(String[] args){
+parent c=new child();
+c.m1();//calls child method not parent bcz object is of child class give prefrence to child method first
+}
+}
+
+op-child constructor
+parent constructor
+child-m1
+10
+20
+parent-m1
+
+
+
+
+
+

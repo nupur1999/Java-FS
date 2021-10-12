@@ -1,0 +1,615 @@
+#overriding- IT allows having same method name and datatypes in two different class but it should have parent child relation.
+
+ex- 
+
+class parent{
+    void property(){
+       System.out,.println("Property");
+    }
+void career(){
+  System.out,.println("Doctor");
+   }
+   }
+
+class child extends parent{
+void career(){
+  System.out.println("Engg");
+   }
+   }
+class Test{
+Public static void main(String[] args){
+
+parent p=new parent();
+p.career();//Doctor
+ 
+child c= new child();
+c.career();//Engg
+
+parent p1=new child();
+p1.career();//Engg(at compile time it will check refrence class method present or not but at run time the child method is called as the object is of child class)
+}
+}
+
+o/p-Doctor
+    Engg
+    Engg
+
+****************************************************************************************************************************************************************************************
+
+1.Return type check is done in overriding 
+
+class parent{
+    void property(){
+       System.out,.println("Property");
+    }
+ void career(){
+  System.out,.println("Doctor");
+   }
+   }
+
+class child extends parent{
+ String career(){
+  System.out.println("Engg");
+ return null;
+   }
+   }
+class Test{
+Public static void main(String[] args){
+
+parent p=new parent();
+p.career();//Doctor
+ 
+child c= new child();
+c.career();//Engg
+
+parent p1=new child();
+p1.career();//error(bcz return type is not same in parent and chlid class)
+}
+}
+
+Note-while compilation it check method signature table in witch return type of parent child is also check by method signature. 
+o/p-error    
+
+
+ex-
+
+class parent{
+    void property(){
+       System.out,.println("Property");
+    }
+String career(){
+  System.out,.println("Doctor");
+return null;
+   }
+   }
+
+class child extends parent{
+String career(){
+  System.out.println("Engg");
+ return null;
+   }
+   }
+class Test{
+Public static void main(String[] args){
+
+parent p=new parent();
+p.career();//Doctor
+ 
+child c= new child();
+c.career();//Engg
+
+parent p1=new child();
+p1.career();//Engg
+}
+o/p-Doctor
+    Engg
+    Engg
+
+
+***************************************************************************************************************************************************************************************
+Covarient return type-In overriding in which the method having return type with parent child relation is covarient. 
+
+
+2. return type with parent child relation
+
+2.1)Parent class having child return type of child class return type-gives error
+class parent{
+    void property(){
+       System.out.println("Property");
+    }
+String career(){
+  System.out,.println("Doctor");
+return null;
+   }
+   }
+
+class child extends parent{
+object career(){
+  System.out.println("Engg");
+ return null;
+   }
+   }
+class Test{
+Public static void main(String[] args){
+
+parent p=new parent();
+p.career();//Doctor
+ 
+child c= new child();
+c.career();//Engg
+
+parent p1=new child();
+p1.career();//error bcz in parent class string career() method is the child return type of object return type which is not allowed
+}
+
+Note-if return type is different while checking in method signature table but in case the return type have parent child reation then its compalsary that parent return type should be parent of an child return type
+Note - Object is the parent of String class
+
+  o/p-error
+
+
+
+2.2)Parent class having parent return type of child class return type.
+
+class parent{
+    void property(){
+       System.out.println("Property");
+    }
+Object career(){
+  System.out,.println("Doctor");
+return null;
+   }
+   }
+
+class child extends parent{
+String career(){
+  System.out.println("Engg");
+ return null;
+   }
+   }
+class Test{
+Public static void main(String[] args){
+
+parent p=new parent();
+p.career();//Doctor
+ 
+child c= new child();
+c.career();//Engg
+
+parent p1=new child();
+p1.career();//Engg(bcz Object is the parent of string class)
+
+o/p-Doctor
+   Engg
+  Engg
+
+
+*************************************************************************************************************************************************************************************
+
+
+3.In overriding child class Access-specipers should not lower presidance than  parent class  Access-specipers
+
+lower acess ------>higher acess
+private->default->protected->public
+
+
+3.1)(parent default method- child default method in overriding)->run sucessfully
+
+class parent{
+    void property(){
+       System.out,.println("Property");
+    }
+ void career(){
+  System.out,.println("Doctor");
+   }
+   }
+
+class child extends parent{
+ void career(){
+  System.out.println("Engg");
+ return null;
+   }
+   }
+
+
+
+3.2)(parent public method- child default method in overriding)->gives error as public access can not be converted default acess
+
+class parent{
+    void property(){
+       System.out,.println("Property");
+    }
+ public void career(){
+  System.out,.println("Doctor");
+   }
+   }
+
+class child extends parent{
+ void career(){
+  System.out.println("Engg");
+ return null;
+   }
+   }
+
+
+3.3)(parent protected method- child default method in overriding)->gives error bcz protected has higher precidance than default can not be converted
+
+class parent{
+    void property(){
+       System.out,.println("Property");
+    }
+ protected void career(){
+  System.out,.println("Doctor");
+   }
+   }
+
+class child extends parent{
+ void career(){
+  System.out.println("Engg");
+ return null;
+   }
+   }
+
+
+3.4)(parent default method- child protected method in overriding)->run
+class parent{
+    void property(){
+       System.out,.println("Property");
+    }
+  void career(){
+  System.out,.println("Doctor");
+   }
+   }
+
+class child extends parent{
+protected void career(){
+  System.out.println("Engg");
+ return null;
+   }
+   }
+
+
+
+3.5)(parent private method- child public method in overriding)->should not but  gives error as private has lower precidance than public but private has the senario it can not be acess outside thats why gives error
+class parent{  
+  void property(){
+       System.out,.println("Property");
+    }
+  private void career(){
+  System.out,.println("Doctor");
+   }
+   }
+
+class child extends parent{
+public void career(){
+  System.out.println("Engg");
+ return null;
+   }
+   }
+class test{
+public static void main(String args){
+parent p= new parent();
+p.career();//error
+ parent p1=new child();
+p1.career();//error
+}
+}
+
+Note->private can not be acess out of its class or method to another class
+
+
+3.5)(parent private method- child private method in overriding)-> gives error 
+class parent{  
+  void property(){
+       System.out,.println("Property");
+    }
+  private void career(){
+  System.out,.println("Doctor");
+   }
+   }
+
+class child extends parent{
+private void career(){
+  System.out.println("Engg");
+ return null;
+   }
+   }
+class test{
+public static void main(String args){
+parent p= new parent();
+p.career();//error
+ parent p1=new child();
+p1.career();//error
+}
+}
+
+3.6)1](parent private method- child private method in overriding)/2](parent private method- child public method in overriding)->compilation done as private ethod is not called by another class or method
+
+
+1.class parent{  
+  void property(){
+       System.out,.println("Property");
+    }
+  private void career(){
+  System.out,.println("Doctor");
+   }
+   }
+
+class child extends parent{
+private void career(){
+  System.out.println("Engg");
+ return null;
+   }
+   }
+
+
+2.class parent{  
+  void property(){
+       System.out,.println("Property");
+    }
+  private void career(){
+  System.out,.println("Doctor");
+   }
+   }
+
+class child extends parent{
+public void career(){
+  System.out.println("Engg");
+ return null;
+   }
+   }
+
+******************************************************************************************************************************************************************************
+
+
+#Final in overriding
+
+1. Not overriding final method in child class but can be called by child object
+
+class parent{
+ final void m1(){
+     System.out.println("In m1");
+   }
+}
+class child extends parent{
+     public static void main(String[] args){
+         parent p=new parent();
+         p.m1();//In m1
+         child c= new child();
+         c.m1();//In m1
+   }
+}
+
+
+o/p-In m1
+    In m1
+
+
+
+2.  overriding final method in child class ->gives error final method can not be override
+
+Highlits:-   parent->final method
+             child->overiding final method
+
+class parent{
+ final void m1(){
+     System.out.println("In parent-m1");
+   }
+}
+class child extends parent{
+     void m1(){
+    System.out.println("In child-m1");
+     }
+}
+
+ Note- Final method can not be override in child class.
+
+o/p-error 
+
+
+
+
+3.final used by child class method which is overriding from final parent class method ->error
+
+
+Highlits:-   parent-> final method
+             child->overiding with  final method
+
+
+class parent{
+  final void m1(){
+     System.out.println("In parent-m1");
+   }
+}
+class child extends parent{
+    final void m1(){
+    System.out.println("In child-m1");
+     }
+}
+
+
+o/p- error
+
+
+
+4.final used by child class method which is overriding from parent class method ->works 
+
+
+Highlits:-   parent-> method
+             child->overiding with  final method
+
+
+class parent{
+  void m1(){
+     System.out.println("In parent-m1");
+   }
+}
+class child extends parent{
+    final void m1(){
+    System.out.println("In child-m1");
+     }
+    
+     public static void main(String[] args){
+         child c= new child();
+         c.m1();//In child-m1
+   }
+}
+
+
+o/p- In child-m1
+
+
+
+*********************************************************************************************************************************
+# static in overriding
+
+
+1.parent-> static method
+  child->overrinng with non static method
+
+
+
+class parent{
+  static void m1(){
+     System.out.println("In parent-m1");
+   }
+}
+class child extends parent{
+  void m1(){
+    System.out.println("In child-m1");
+     }
+    
+     public static void main(String[] args){
+       parent c= new child();
+         c.m1();//error
+   }
+}
+
+
+
+o/p-error
+
+
+
+2.parent-> non-static method
+  child->overrinng with  static method
+
+
+
+class parent{
+   void m1(){
+     System.out.println("In parent-m1");
+   }
+}
+class child extends parent{
+  static void m1(){
+    System.out.println("In child-m1");
+     }
+    
+     public static void main(String[] args){
+       parent c= new child();
+         c.m1();//error
+   }
+}
+
+
+
+o/p-error
+
+
+
+3.Method hiding
+  parent-> static method
+  child->overrinng with  static method
+
+
+
+class parent{
+   static void m1(){
+     System.out.println("In parent-m1");
+   }
+}
+class child extends parent{
+  static void m1(){
+    System.out.println("In child-m1");
+     }
+    
+     public static void main(String[] args){
+       parent c= new child();
+         c.m1();//In parent-m1(bcz method hiding work here)
+   }
+}
+
+ Note- Method hiding says that if thier is a child object with refrence of parent it will call the parent satic  method which usually not done but as parent and child both method are
+ static and overriding it will call refrence static method.
+
+
+o/p-In parent-m1
+
+*******************************************************************************************************************************
+#overriding with abstract method
+
+ Grandpa->non abstract method
+ father->overriding with abstract method 
+ son->non-abstract method overriding  abstract method of father
+
+class Grandpa{
+    void marry(){
+     System.out.println("Decision");
+   }
+
+}
+ abstract class father extends Grandpa{
+   abstract void marry();
+}
+
+ class son extends father{
+   void marry(){
+ System.out.println("disha patani");
+  }
+  public static void main(String[] args){
+    Father f=new Son();
+    f.marry();//disha patani
+   }
+
+}
+
+o/p-disha patani
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

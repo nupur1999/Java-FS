@@ -1,0 +1,1514 @@
+
+#MultiThreading-->
+
+class ThreadDemo{
+   public static void main(String[] args){
+    System.out.println("Multithreading");
+     String threadNmae=Thread.currentThread().getName();
+   System.out.println("Thread Name = "+threadNmae);
+ }
+}
+o/p-Multithreading
+    Thread Name = main
+
+
+
+.Example of Multithreading-->
+
+-we have to extends or impliments the Thread class which is in lang package
+-then we have to make the object of class to call the start method of Thread class
+-By above two steps new thred is created
+-output of the multithreading is not fixed which thread is first called is depend on priority
+-every time we run the same code output could be different
+
+class ThreadDemo extends Thread{
+ public void run(){
+  System.out.println("In run");
+     String threadNmae=Thread.currentThread().getName();
+   System.out.println("Thread Name = "+threadNmae);
+ }
+   public static void main(String[] args){
+   
+     ThreadDemo t= new ThreadDemo();
+     t.start();
+     
+    System.out.println("Multithreading");
+     String threadNmae=Thread.currentThread().getName();
+   System.out.println("Thread Name = "+threadNmae);
+ }
+}
+o/p-Multithreading
+     In run
+    Thread Name = main
+    Thread Nmae= Thread-0
+
+o/p-Multithreading
+     In run
+     Thread Nmae= Thread-0
+    Thread Name = main
+   
+********************************************************************************************************************************************************************************
+#working of the code-->
+
+                                                                                         Thread implements runnable interface which has run method
+                                                                                              |
+class ThreadDemo extends Thread{                                                         class Thread{                        
+              /run method is override here                                                          public void run(){
+  public void run(){                                                                       }
+  }
+  public static void main(String args){                                                    public void start(){
+        ThreadDemo t= new ThreadDemo()                                                          start0();  --------->gives thread to thread-sheduler of jvm 
+        t.start();                                                                              }
+                                                                                          public native start0();
+   }                                                                                        Runnable target;
+}                                                                                            target.run()
+                                                                                                    |---target has the object of ThreadDemo which comes with start method
+                                                                                                     --- call of the method of threadDemo is done by the class thread                                     
+                                             
+
+
+****************************************************************************************************************************************************************************************
+#code of multithreading-->
+-we have to extends Thread method
+-we have to override run method of thread class which one is the runnable interface method ,runnable interface is implement by thread class.
+-we have to call start method of thread
+
+
+
+
+class ThreadDemo extends Thread{
+   public void run(){
+       System.out.println(Thread.currentThread().getName()); //thread-0
+     for(int i=0;i<10;i++){
+      System.out.println("Core2web");
+  }
+ }
+}
+class Demo{
+   public static void main(String[] args){
+
+             ThreadDemo t = new ThreadDemo();  
+            t.start();                       
+
+      System.out.println(Thread.currentThread().getName()); //main thread
+
+            for(int i=0;i<10;i++){
+      System.out.println("Biencaps");
+     }
+   }
+ }
+o/p-Thread-0
+    Core2web
+    Core2web
+    Core2web
+    Core2web
+   Core2web
+   Core2web
+   Core2web
+   Core2web
+   Core2web
+    Core2web
+     main
+    Biencaps
+    Biencaps
+    Biencaps
+    Biencaps
+    Biencaps
+    Biencaps
+    Biencaps
+    Biencaps
+    Biencaps
+    Biencaps
+
+o/p-main
+    Biencaps
+    Biencaps
+    Biencaps
+    Biencaps
+    Biencaps
+    Biencaps
+    Biencaps
+    Biencaps
+    Biencaps
+    Biencaps
+   Thread-0
+    Core2web
+    Core2web
+    Core2web
+    Core2web
+   Core2web
+   Core2web
+   Core2web
+   Core2web
+   Core2web
+    Core2web
+
+ Note - output is not fixed
+
+
+*******************************************************************************************************************************************************************************
+
+
+#example if we dont write run method-->
+
+ex-
+class ThreadDemo extends Thread{
+   public void gun(){
+       System.out.println(Thread.currentThread().getName()); //main
+     for(int i=0;i<10;i++){
+      System.out.println("Core2web");
+  }
+ }
+}
+class Demo{
+   public static void main(String[] args){
+
+             ThreadDemo t = new ThreadDemo();  
+            t.start();                       
+
+      System.out.println(Thread.currentThread().getName()); //main thread
+
+            for(int i=0;i<10;i++){
+      System.out.println("Biencaps");
+     }
+   }
+ }
+o/p-main
+    Biencaps
+    Biencaps
+    Biencaps
+    Biencaps
+    Biencaps
+    Biencaps
+    Biencaps
+    Biencaps
+    Biencaps
+    Biencaps
+
+Note->it makes new thread but their is not run method so it calls thread class run method  which is blank
+
+
+.If we dont write run method-->
+ex-
+class ThreadDemo extends Thread{
+   public void gun(){
+       System.out.println(Thread.currentThread().getName()); //main
+     for(int i=0;i<10;i++){
+      System.out.println("Core2web");
+  }
+ }
+}
+class Demo{
+   public static void main(String[] args){
+
+             ThreadDemo t = new ThreadDemo();  
+            t.start();
+             t.gun(),                       
+
+      System.out.println(Thread.currentThread().getName()); //main thread
+
+            for(int i=0;i<10;i++){
+      System.out.println("Biencaps");
+     }
+   }
+ }
+o/p-main
+    Core2web
+    Core2web
+    Core2web
+    Core2web
+   Core2web
+   Core2web
+   Core2web
+   Core2web
+   Core2web
+    Core2web
+     main
+    Biencaps
+    Biencaps
+    Biencaps
+    Biencaps
+    Biencaps
+    Biencaps
+    Biencaps
+    Biencaps
+    Biencaps
+    Biencaps
+note-here output is fixed
+
+
+**************************************************************************************************************************************************************************
+#if we try to call run method with class object-->
+class ThreadDemo extends Thread{
+   public void run(){
+       System.out.println(Thread.currentThread().getName()); //main
+     for(int i=0;i<5;i++){
+      System.out.println("Core2web");
+  }
+ }
+}
+class ThreadScenario{
+   public static void main(String[] args){
+
+             ThreadDemo t = new ThreadDemo();  
+            t.run();                       
+
+      System.out.println(Thread.currentThread().getName()); //main thread
+
+            for(int i=0;i<5;i++){
+      System.out.println("Biencaps");
+     }
+   }
+ }
+o/p-main
+   Core2web
+    Core2web
+    Core2web
+    Core2web
+   Core2web
+   Core2web
+     main
+    Biencaps
+    Biencaps
+    Biencaps
+    Biencaps
+    Biencaps
+
+same ans will come if we exceute multiple times
+Note-thread is created but thread is not started
+*********************************************************************************************************************************************************************************
+#Overloading of run method-->
+ex-
+class ThreadDemo extends Thread{
+   public void run(){
+       System.out.println(Thread.currentThread().getName()); //thread 0
+     for(int i=0;i<5;i++)
+      System.out.println("Core2web");
+  }
+ public void run(int x){
+       System.out.println(Thread.currentThread().getName()); //main
+     for(int i=0;i<5;i++)
+      System.out.println("Incubetor");
+
+ }
+}
+class ThreadScenario{
+   public static void main(String[] args){
+
+             ThreadDemo t = new ThreadDemo();  
+            t.start(); 
+            t.run(1);                      
+
+      System.out.println(Thread.currentThread().getName()); //main thread
+
+            for(int i=0;i<5;i++)
+      System.out.println("Biencaps");
+     
+   }
+ }
+o/p-main
+   Incubetor
+Incubetor
+Incubetor
+Incubetor
+thread-0
+Incubator
+main
+Biencaps
+Biencaps
+Biencaps
+Biencaps
+Biencaps
+Core2web
+Core2web
+Core2web
+Core2web
+Core2web
+
+****************************************************************************************************************************************************************************
+#if we write own start method-
+
+class ThreadDemo extends Thread{
+   public void run(){
+       System.out.println(Thread.currentThread().getName()); 
+     for(int i=0;i<5;i++)
+      System.out.println("Core2web");
+  }
+   public void start(){
+     System.outprintln("In start");
+System.out.println(Thread.currentThread().getName()); 
+ }
+}
+class ThreadScenario{
+   public static void main(String[] args){
+
+             ThreadDemo t = new ThreadDemo();  
+            t.start(); 
+         
+      System.out.println(Thread.currentThread().getName()); //main thread
+
+            for(int i=0;i<5;i++)
+      System.out.println("Biencaps");
+     
+   }
+ }
+o/p-My start
+main
+  main
+  Biencaps
+Biencaps
+Biencaps
+Biencaps
+Biencaps   
+
+
+*************************************************************************************************************************************************************************************
+*****************
+#lifecycle of thread in multithreading
+
+
+
+  
+ThreaddDemo obj= new ThreadDemo();
+
+  newborrn----------------------->Ready/runnable        
+              obj.start()               |
+                                        |   
+                                        |ThreadSheduler
+                                        |   
+                  run()                 |
+       Dead<------------------------ Running
+                Complete
+
+
+******************************************************************************************************************************************************************************************
+#giving own name to thread-->
+
+class ThreadDemo extends Thread{
+   public void run(){
+       System.out.println(Thread.currentThread().getName()); //Nupur
+     for(int i=0;i<5;i++){
+      System.out.println("Core2web");
+  }
+ }
+}
+class Demo{
+   public static void main(String[] args){
+
+             ThreadDemo t = new ThreadDemo();  
+            t.start();                       
+            t.setName("Nupur");
+      System.out.println(Thread.currentThread().getName()); //main thread
+
+            for(int i=0;i<5;i++){
+      System.out.println("Biencaps");
+     }
+   }
+ }
+o/p-main
+    Biencaps
+Biencaps
+Biencaps
+Biencaps  
+Biencaps  
+Nupur
+Core2web
+Core2web
+Core2web
+Core2web
+Core2web
+****************************************************************************************************************************************************************************************
+#Priority of thread in multithreading
+
+.Finding priority of thread-->
+ex-
+class ThreadDemo extends Thread{
+   public void run(){
+
+       System.out.println(Thread.currentThread().getName()); //Nupur
+       System.out.println(Thread.currentThread().getPriority()); 
+     for(int i=0;i<5;i++){
+      System.out.println("Core2web");
+  }
+ }
+}
+class Demo{
+   public static void main(String[] args){
+
+             ThreadDemo t = new ThreadDemo();  
+            t.start();                       
+            t.setName("Nupur");
+      System.out.println(Thread.currentThread().getPriority()); 
+       System.out.println(Thread.currentThread().getName()); //main thread
+            for(int i=0;i<5;i++){
+      System.out.println("Biencaps");
+     }
+   }
+ }
+o/p-5
+  main
+   Biencaps
+Biencaps
+Biencaps
+Biencaps  
+Biencaps
+Nupur
+5
+Core2web
+Core2web
+Core2web
+Core2web
+Core2web
+
+
+
+
+.seting priority of thread-->
+ex-
+class ThreadDemo extends Thread{
+   public void run(){
+
+       System.out.println(Thread.currentThread().getName()); //Nupur
+       System.out.println(Thread.currentThread().getPriority()); 
+     for(int i=0;i<5;i++){
+      System.out.println("Core2web");
+  }
+ }
+}
+class Demo{
+   public static void main(String[] args){
+
+             ThreadDemo t = new ThreadDemo();  
+            t.start();                       
+            t.setName("Nupur");
+            t.setPriority(7);
+      System.out.println(Thread.currentThread().getPriority()); 
+       System.out.println(Thread.currentThread().getName()); //main thread
+            for(int i=0;i<5;i++){
+      System.out.println("Biencaps");
+     }
+   }
+ }
+o/p-5
+  main
+   Biencaps
+Biencaps
+Biencaps
+Biencaps  
+Biencaps
+Nupur
+7
+Core2web
+Core2web
+Core2web
+Core2web
+Core2web
+
+.if we try negative priority-->
+ex-
+class ThreadDemo extends Thread{
+   public void run(){
+
+       System.out.println(Thread.currentThread().getName()); //Nupur
+       System.out.println(Thread.currentThread().getPriority()); 
+     for(int i=0;i<5;i++){
+      System.out.println("Core2web");
+  }
+ }
+}
+class Demo{
+   public static void main(String[] args){
+
+             ThreadDemo t = new ThreadDemo();  
+            t.start();                       
+            t.setName("Nupur");
+            t.setPriority(-7);
+      System.out.println(Thread.currentThread().getPriority()); 
+       System.out.println(Thread.currentThread().getName()); //main thread
+            for(int i=0;i<5;i++){
+      System.out.println("Biencaps");
+     }
+   }
+ }
+o/p-compiles sucessfully
+but at run time give error
+******************************************************************************************************************************************************************************************
+
+# when we try to call start method twice with same object->
+
+class Mythread extends Thread{
+  public void run(){
+
+   System.out.println("Thread Name =" +Thread.currentThread().getName());
+   }
+}
+
+class RestartThread{
+ public static void main(String[] args){
+   
+   MyThread mt= new MyThread();
+    mt.start();
+   System.out.println("Thread Name =" +Thread.currentThread().getName());
+  
+  mt.start();//error
+  
+ }
+}
+o/p- compile sucessfully
+    At run time gives error-Exception in thread main java.lang.IllegalThreadStateEException
+
+
+
+
+
+*****************************************************************************************************************************************************************************************
+#creating multiple threads-->
+
+ ex1->
+class Mythread extends Thread{
+  public void run(){
+
+   System.out.println("Thread Name =" +Thread.currentThread().getName());
+
+   }
+}
+
+class MultipleThreads{
+ public static void main(String[] args){
+   
+   MyThread mt= new MyThread();
+    mt.start();
+
+   System.out.println("Thread Name =" +Thread.currentThread().getName());
+   
+ MyThread mt1= new MyThread();
+    mt1.start();
+
+ }
+}
+
+o/p-Thread Name = main
+   Thread Name =Thread0
+   Thread Name =Thread1
+
+
+
+
+ex 2-->
+
+class NewThread extends Thread{
+  public void run(){
+   System.out.println("Thread Name =" +Thread.currentThread().getName());
+  }
+}
+class Mythread extends Thread{
+  public void run(){
+
+   System.out.println("Thread Name =" +Thread.currentThread().getName());
+   }
+
+    NewThread nt= new NewThread();
+    nt.start();
+}
+class MultipleThreads{
+ public static void main(String[] args){
+   
+   MyThread mt= new MyThread();
+    mt.start();
+
+   System.out.println("Thread Name =" +Thread.currentThread().getName());
+   
+ }
+}
+
+o/p-Thread Name = Thread0
+   Thread Name =main
+   Thread Name =Thread1
+
+****************************************************************************************************************************************************************************************
+#imlements of Runnalbe in class-->
+
+ex-
+class MyThread implements Runnable{
+
+  public void run(){
+   System.out.println("In run Method);
+  }
+}
+class RunTime{
+  public static void main(String[] args){
+   MyThread mt= new MyThread(); //At this time object is not created here bcz we dont extends thread class to call the thread class method
+  Thread t= new Thread(mt);
+    t.start();
+  }
+}
+ 
+
+o/p- javap java.lang.Runnable
+    public interface java.lang.Runnable{
+   public abstract void run();
+   }
+
+
+
+ex-
+class MyThread implements Runnable{
+
+  public void run(){
+   System.out.println("In run Method);
+  }
+}
+class RunnbleThread{
+  public static void main(String[] args){
+   MyThread mt= new MyThread();
+    mt.start();//error
+  }
+}
+o/p- error bcz class dont extends thread class to call start method 
+
+
+
+
+
+ex-
+class MyThread implements Runnable{
+
+  public void run(){
+   System.out.println("In run Method);
+  }
+}
+class RunnbleThread{
+  public static void main(String[] args){
+   MyThread mt= new MyThread();
+   Thread t= new Thread(mt);
+    t.start();
+  
+}
+o/p- In run method
+
+
+
+
+
+ex-
+class MyThread implements Runnable{
+
+  public void run(){
+   System.out.println("In run Method);
+  }
+}
+class RunnbleThread{
+  public static void main(String[] args){
+   MyThread mt= new MyThread();
+   Thread t= new Thread();
+    t.start();
+  
+}
+o/p- blank no out put bcz it calls Thread method run which is empty
+
+******************************************************************************************************************************************************************************************
+
+#sleep method in multithreading
+
+ex-
+class SleepDemo extends Thread{
+     public void run(){
+       System.out.println("In run");
+    
+   for(int i=0;i<10;i++){
+        System.out.println("child Thread");
+  }
+  }
+}
+class ThreadDemo{
+ 
+ public static void main(String[] args){
+
+    Sleep sd= new SleepDemo();
+     sd.start();
+    
+   for(int i=0;i<10;i++){
+        System.out.println("Main Thread");
+          sleep(2000);//error
+  }
+ }
+}
+
+
+ex-
+class SleepDemo extends Thread{
+     public void run(){
+       System.out.println("In run");
+    
+   for(int i=0;i<10;i++){
+        System.out.println("child Thread");
+  }
+  }
+}
+class ThreadDemo{
+ 
+ public static void main(String[] args){ //error
+
+    Sleep sd= new SleepDemo();
+     sd.start();
+      sd. sleep(2000);
+    
+   for(int i=0;i<10;i++){
+        System.out.println("Main Thread");
+  }
+ }
+}
+o/p-exception must be thrown
+
+
+
+ex-
+class SleepDemo extends Thread{
+     public void run(){
+       System.out.println("In run");
+    
+   for(int i=0;i<10;i++){
+        System.out.println("child Thread");
+  }
+  }
+}
+class ThreadDemo{
+ 
+ public static void main(String[] args)throws InterreptedException{
+
+    Sleep sd= new SleepDemo();
+     sd.start();
+      sd. sleep(2000);
+    
+   for(int i=0;i<10;i++){
+        System.out.println("Main Thread");
+  }
+ }
+}
+ o/p-In run
+     child Thread
+     child Thread
+     child Thread
+     child Thread
+     child Thread
+     child Thread
+     child Thread
+     child Thread
+     child Thread
+     (2 sec pause)
+     Main Thread
+    Main Thread
+     Main Thread
+     Main Thread
+     Main Thread
+     Main Thread
+     Main Thread
+     Main Thread
+     Main Thread
+     Main Thread
+
+
+
+
+
+ex-
+class SleepDemo extends Thread{
+     public void run(){
+       System.out.println("In run");
+    
+   for(int i=0;i<10;i++){
+        System.out.println("child Thread");
+            sd. sleep(2000);   //error
+  }
+  }
+}
+class ThreadDemo{
+ 
+ public static void main(String[] args)throws InterreptedException{
+
+    Sleep sd= new SleepDemo();
+     sd.start();
+      
+    
+   for(int i=0;i<10;i++){
+        System.out.println("Main Thread");
+  }
+ }
+}
+o/p-error
+
+
+
+.we can not write Throws InterruptedException to run method of child-->
+ex-
+class SleepDemo extends Thread{
+     public void run() throws InterruptedException{  //error
+       System.out.println("In run");
+    
+   for(int i=0;i<10;i++){
+        System.out.println("child Thread");
+            sleep(2000);   //sleep is a thread method
+  }
+  }
+}
+class ThreadDemo{
+ 
+ public static void main(String[] args)throws InterreptedException{
+
+    Sleep sd= new SleepDemo();
+     sd.start();
+      
+    
+   for(int i=0;i<10;i++){
+        System.out.println("Main Thread");
+  }
+ }
+}
+o/p-error
+
+
+
+
+ex-
+
+class SleepDemo extends Thread{
+     public void run(){  
+       System.out.println("In run");
+    
+   for(int i=0;i<10;i++){
+        System.out.println("child Thread");
+         try{
+      sleep(2000);   //sleep is a thread method
+         }catch(InterruptedException ie){
+          
+             } 
+  }
+  }
+}
+class ThreadDemo{
+ 
+ public static void main(String[] args)throws InterreptedException{
+
+    Sleep sd= new SleepDemo();
+     sd.start();
+      
+    
+   for(int i=0;i<10;i++){
+        System.out.println("Main Thread");
+  }
+ }
+}
+o/p-Main Thread
+Main Thread
+Main Thread
+Main Thread
+Main Thread
+Main Thread
+Main Thread
+Main Thread
+Main Thread
+Main Thread
+In run
+child Thread
+(2 sec pause)
+child Thread
+(2 sec pause)
+child Thread
+(2 sec pause)
+child Thread
+(2 sec pause)
+child Thread
+(2 sec pause)
+child Thread
+(2 sec pause)
+child Thread
+(2 sec pause)
+child Thread
+(2 sec pause)
+child Thread
+(2 sec pause)
+child Thread
+
+*********************************************************************************************************************************************************************************************
+
+
+#join in multithreading -->
+
+- when we do join it makes first execut the another method and then the method where we do join 
+-join means here wait to execute another class method
+
+
+.join throws InturruptedException
+ex-
+class MyThread extends Thread{   
+  public void run() {
+    
+         for(int i=0 ;i<10;i++){
+          System.out.println("Child Thread");
+     }
+   }
+}
+ class JoinDemo{
+  public static void main(String[] args){
+      
+  MyThread mt = new MyThread();
+  mt.start();
+  mt.join();
+      for(int i=0 ;i<10;i++){
+          System.out.println("main Thread");
+     }
+   }
+}
+o/p-error
+
+
+.example of join in main to child class to execute first ->
+ex-
+class MyThread extends Thread{   
+  public void run() {
+    
+         for(int i=0 ;i<10;i++){
+          System.out.println("Child Thread");
+     }
+   }
+}
+ class JoinDemo{
+  public static void main(String[] args) throws InterruptedException{
+      
+  MyThread mt = new MyThread();
+  mt.start();
+  mt.join(); //apllied join to child to execute child first
+      for(int i=0 ;i<10;i++){
+          System.out.println("main Thread");
+     }
+   }
+}
+o/p-Child Thread
+Child Thread
+Child Thread
+Child Thread
+Child Thread
+Child Thread
+Child Thread
+Child Thread
+Child Thread
+Child Thread
+main Thread
+main Thread
+main Thread
+main Thread
+main Thread
+main Thread
+main Thread
+main Thread
+main Thread
+main Thread
+
+Note - if we execute many times also output will not change.
+
+
+
+
+
+.example of join with sleep->
+
+ex-
+class MyThread extends Thread{   
+  public void run() {
+    
+         for(int i=0 ;i<10;i++){
+          System.out.println("Child Thread");
+         try{
+                Thread.sleep(2000);
+          }catch(InterruptedException ie){
+             System.out.println("Exception Caught");
+       }
+     }
+   }
+}
+ class JoinDemo{
+  public static void main(String[] args) throws InterruptedException{
+      
+  MyThread mt = new MyThread();
+  mt.start();
+  mt.join();
+      for(int i=0 ;i<10;i++){
+          System.out.println("main Thread");
+     }
+   }
+}
+o/p-Child Thread
+  (2sec wait)
+Child Thread
+(2sec wait)
+Child Thread
+(2sec wait)
+Child Thread
+(2sec wait)
+Child Thread
+(2sec wait)
+Child Thread
+(2sec wait)
+Child Thread
+(2sec wait)
+Child Thread
+(2sec wait)
+Child Thread
+(2sec wait)
+Child Thread
+(2sec wait)
+main Thread
+main Thread
+main Thread
+main Thread
+main Thread
+main Thread
+main Thread
+main Thread
+main Thread
+main Thread
+
+Note - if we execute many times also output will not change.
+
+
+
+.Example of join in child class to apllay on main to execute first->
+
+class MyThread extends Thread{
+  static Thread mainThread=null;  //static thread of name mainThread
+  
+    public void run(){
+          // System.out.println(mainThread.getName());//main thread (name of main thread is get here by static thread which is declared above and temparary taken bt main thread in main)
+        try{
+                mainthread.join();                 //here we can apply join to main
+         }catch(InterruptedException ie){
+
+          }
+      }for(int i=0 ;i<10;i++){
+          System.out.println("child Thread");
+     }
+}
+class JoinDemo{
+  public static void main(String[] args){
+      
+  MyThread mt = new MyThread();
+  mt.start();
+    
+  MyThread.mainThread= Thread.currentThread();//current Thread name is temparary in static Thread mainThread
+
+      for(int i=0 ;i<10;i++){
+          System.out.println("main Thread");
+     }
+   }
+}
+o/p-main Thread
+main Thread
+main Thread
+main Thread
+main Thread
+main Thread
+main Thread
+main Thread
+main Thread
+main Thread
+child Thread
+child Thread
+child Thread
+child Thread
+child Thread
+child Thread
+child Thread
+child Thread
+child Thread
+child Thread
+
+
+.example of join with sleep in main-->
+
+class MyThread extends Thread{
+  static Thread mainThread=null;  //static thread of name mainThread
+  
+    public void run(){
+          // System.out.println(mainThread.getName());//main thread (name of main thread is get here by static thread which is declared above and temparary taken bt main thread in main)
+        try{
+                mainthread.join();                 //here we can apply join to main
+         }catch(InterruptedException ie){
+
+          }
+      }for(int i=0 ;i<10;i++){
+          System.out.println("child Thread");
+     }
+}
+class JoinDemo{
+  public static void main(String[] args)throws InterruptedException{
+      
+  MyThread mt = new MyThread();
+  mt.start();
+    
+  MyThread.mainThread= Thread.currentThread();//current Thread name is temparary in static Thread mainThread
+
+      for(int i=0 ;i<10;i++){
+          System.out.println("main Thread");
+         Thread.sleep(2000);
+     }
+   }
+}
+o/p-main Thread
+    (2sec wait)
+main Thread
+    (2sec wait)
+main Thread
+    (2sec wait)
+main Thread
+    (2sec wait)
+main Thread
+    (2sec wait)
+main Thread
+    (2sec wait)
+main Thread
+    (2sec wait)
+main Thread
+    (2sec wait)
+main Thread
+    (2sec wait)
+main Thread
+    (2sec wait)
+child Thread
+child Thread
+child Thread
+child Thread
+child Thread
+child Thread
+child Thread
+child Thread
+child Thread
+child Thread
+
+
+
+.deadlock in multithreading by join-->
+
+
+class MyThread extends Thread{
+  static Thread mainThread=null;  //static thread of name mainThread
+  
+    public void run(){
+          // System.out.println(mainThread.getName());//main thread (name of main thread is get here by static thread which is declared above and temparary taken bt main thread in main)
+        try{
+                mainthread.join();                 //here we can apply join to main
+         }catch(InterruptedException ie){
+
+          }
+      }for(int i=0 ;i<10;i++){
+          System.out.println("child Thread");
+     }
+}
+class JoinDemo{
+  public static void main(String[] args){
+      
+  MyThread mt = new MyThread();
+  mt.start();
+    
+  MyThread.mainThread= Thread.currentThread();//current Thread name is temparary in static Thread mainThread
+
+  mt.join();
+      for(int i=0 ;i<10;i++){
+          System.out.println("main Thread");
+     }
+   }
+}
+o/p-
+compiled and run sucessfully
+no output(deadlock coundition)
+
+
+***************************************************************************************************************************************************************************************
+
+.yeild  in multithreading -->
+
+  -yeild same works as join but thread shedular not gives total priority to another classs. 
+
+
+class MyThread extends Thread{
+  static Thread mainThread=null;  //static thread of name mainThread
+  
+    public void run(){
+  for(int i=0 ;i<10;i++){
+          System.out.println("child Thread");
+     }
+   }
+          
+class JoinDemo{
+  public static void main(String[] args){
+      
+  MyThread mt = new MyThread();
+  mt.start();
+    
+    mt.yeild();
+
+      for(int i=0 ;i<10;i++){
+          System.out.println("main Thread");
+     }
+   }
+}
+o/p-output is not fised works as normal multithreading program
+
+
+****************************************************************************************************************************************************************************************
+jconsole-it is used to see the memory,heap memory,thread usage ,cpu usage,etc internal parts used by program.
+
+
+***************************************************************************************************************************************************************************************
+ #Daemon Thread-->
+
+
+-Deamon thread is a healper thread to the main thread or the thread we have created
+
+.to see deamonThread-->
+ex-
+class DeamonThread extends Thread{
+
+  public void run(){
+       for(int i=0 ;i<5000;i++){
+              System.out.println(Thread.currentThread().getName());
+     }
+   }
+}
+class DaemonDemo{
+   
+  public static void main(String[] args){
+
+     DeamonThread dt1 = new DeamonThread();
+     DeamonThread dt2 = new DeamonThread();
+     DeamonThread dt3 = new DeamonThread();
+       
+        dt1.start();
+        dt2.start();
+        dt3.start();
+
+  }
+}
+
+o/p-to see the deamon thred we can use this two commandas on terminl-->
+     jsp -v
+     jstack (id)-->here we have write id ofDeamonDemo which is given after the above command
+
+
+
+.To make a normal thread to deamon thread-->
+
+class DeamonThread extends Thread{
+
+  public void run(){
+       for(int i=0 ;i<5000;i++){
+              System.out.println(Thread.currentThread().getName());
+     }
+   }
+}
+class DaemonDemo{
+   
+  public static void main(String[] args){
+
+     DeamonThread dt1 = new DeamonThread();
+     DeamonThread dt2 = new DeamonThread();
+     DeamonThread dt3 = new DeamonThread();
+
+        dt2.setDemon(true); //makes dt2Deamon Thread
+
+        dt1.start();
+        dt2.start();
+        dt3.start();
+
+  }
+}
+
+o/p-jsp -v
+     jstack (id)-->here we have write id ofDeamonDemo which is given after the above command
+
+
+**************************************************************************************************************************************************************************************
+
+#threadpool-->
+
+
+-It makes performance fast
+-reuseable thread
+-craetion time not needed due to threads already available in threadpool
+-ThreadPool executer is their to track thing betwwen task and threadpool
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+newFixedThreadPool(20);\
+new CachedThreadPool(); \ Three static method to create pool in Execurors class in which all this three method have return type of ExecutorService Interface.
+SingleThreadExecutor(); /
+
+
+code-->
+ ex 1-->
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
+class ThreadExDemo implements Runnable{
+
+     String workNum = null;
+ 
+     ThreadExDemo(String workNum){
+        this.workNum =workNum;
+   }
+
+  public void run(){
+           System.out.println(Thread.currentThread().getName() + "Start Task" +workNum);
+
+               workAssign();
+
+           System.out.println(Thread.currentThread().getName() + "End Task");
+   }
+
+    void workAssign() throws InterruptedException{ //error bcz workAssign is in run method so it trow exception to run method
+          try{
+           Thread.sleep(3000);
+            }catch(InterruptedException){
+ 
+             }
+   }
+}
+class MyThreadExecutor {
+
+ public static void main(String[] args){
+   
+               return type          className      Static method with executorserviece returnType
+                   /                      /              /
+             ExecutorService  exec = Executors.newFixedThreadPool(10);
+  
+         for(int i=0 ; i<10;i++){
+              
+            ThreadExDemo work =new ThreadExDemo("" + i);
+           exec.execute(work);
+      }
+        exec.shutdown();
+   }
+}
+o/p- pool-1-thread-2start Task1
+  pool-1-thread-4start Task3
+ pool-1-thread-10start Task9
+ pool-1-thread-1start Task0
+ pool-1-thread-5start Task1
+ pool-1-thread-8start Task1
+ pool-1-thread-7start Task1
+ pool-1-thread-9start Task1
+ pool-1-thread-3start Task1
+ pool-1-thread-6start Task1
+     (3 sec later)
+  pool-1-thread-4End Task
+  pool-1-thread-8End Task
+  pool-1-thread-7End Task
+  pool-1-thread-10End Task
+  pool-1-thread-6End Task
+  pool-1-thread-2End Task
+  pool-1-thread-5End Task
+  pool-1-thread-3End Task
+  pool-1-thread-9End Task
+ 
+
+
+ex2-->
+
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
+class ThreadExDemo implements Runnable{
+
+     String workNum = null;
+ 
+     ThreadExDemo(String workNum){
+        this.workNum =workNum;
+   }
+
+  public void run(){
+           System.out.println(Thread.currentThread().getName() + "Start Task" +workNum);
+
+               workAssign();
+
+           System.out.println(Thread.currentThread().getName() + "End Task");
+   }
+
+    void workAssign() throws InterruptedException{ //error bcz workAssign is in run method so it trow exception to run method
+          try{
+           Thread.sleep(3000);
+            }catch(InterruptedException){
+ 
+             }
+   }
+}
+class MyThreadExecutor {
+
+ public static void main(String[] args){
+   
+               return type          className      Static method with executorserviece returnType
+                   /                      /              /
+             ExecutorService  exec = Executors.newFixedThreadPool(10);
+  
+         for(int i=0 ; i<20;i++){
+              
+            ThreadExDemo work =new ThreadExDemo("" + i);
+           exec.execute(work);
+      }
+        exec.shutdown();
+   }
+}
+o/p-pool-1-thread-2start Task1
+  pool-1-thread-4start Task3
+ pool-1-thread-10start Task9
+ pool-1-thread-1start Task0
+ pool-1-thread-5start Task1
+ pool-1-thread-8start Task1
+ pool-1-thread-7start Task1
+ pool-1-thread-9start Task1
+ pool-1-thread-3start Task1
+ pool-1-thread-6start Task1
+   (3 sec later)
+  pool-1-thread-4End Task
+  pool-1-thread-8End Task
+ pool-1-thread-4start Task10
+  pool-1-thread-7End Task
+  pool-1-thread-10End Task
+  pool-1-thread-6End Task
+ pool-1-thread-10start Task15
+  pool-1-thread-2End Task
+  pool-1-thread-5End Task
+ pool-1-thread-8start Task20
+  pool-1-thread-2End Task
+ pool-1-thread-5start Task11
+  pool-1-thread-3End Task
+ pool-1-thread-2start Task14
+pool-1-thread-2start Task18
+pool-1-thread-9start Task17
+pool-1-thread-6start Task16
+pool-1-thread-3start Task19
+  pool-1-thread-9End Task
+ pool-1-thread-4End Task
+  pool-1-thread-8End Task
+pool-1-thread-6End Task
+  pool-1-thread-5End Task
+  pool-1-thread-3End Task
+
+
+
